@@ -55,7 +55,7 @@
     "avalanche:restart": "./packages/hardhat/scripts/avalanche-local.sh restart",
     "fund:local": "./scripts/fund-wallet.sh"
   },
-  "packageManager": "yarn@3.2.3",
+  "packageManager": "yarn@4.10.3",
   "devDependencies": {
     "lint-staged": "^15.2.10"
   },

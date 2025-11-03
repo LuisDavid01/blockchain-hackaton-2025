@@ -11,8 +11,8 @@ services:
       /avalanchego/build/avalanchego
       --network-id=local
       --http-host=0.0.0.0
-      --http-port=9650
       --staking-enabled=false
+      --http-port=9650
       --snow-sample-size=1
       --snow-quorum-size=1
     volumes:
