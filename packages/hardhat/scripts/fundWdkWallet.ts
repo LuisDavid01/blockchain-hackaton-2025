@@ -2,10 +2,10 @@ import { ethers } from "hardhat";
 
 /**
  * Fund a WDK wallet address with AVAX from the pre-funded local account
- * 
+ *
  * Usage:
  *   yarn hardhat run scripts/fundWdkWallet.ts --network avalancheLocal
- * 
+ *
  * The script will prompt you to paste your WDK wallet address
  */
 async function main() {
@@ -72,7 +72,7 @@ async function main() {
   const newBalance = await ethers.provider.getBalance(recipientAddress);
   console.log("\n💰 New Balance:");
   console.log("   WDK Wallet:", ethers.formatEther(newBalance), "AVAX");
-  
+
   const newFunderBalance = await ethers.provider.getBalance(funderAddress);
   console.log("   Funder:", ethers.formatEther(newFunderBalance), "AVAX");
 
@@ -81,8 +81,7 @@ async function main() {
 
 main()
   .then(() => process.exit(0))
-  .catch((error) => {
+  .catch(error => {
     console.error("\n❌ Error:", error.message);
     process.exit(1);
   });
-

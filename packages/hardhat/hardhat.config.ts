@@ -70,7 +70,7 @@ const config: HardhatUserConfig = {
     avalancheFuji: {
       url: "https://api.avax-test.network/ext/bc/C/rpc",
       chainId: 43113,
-      accounts: [deployerPrivateKey], 
+      accounts: [deployerPrivateKey],
     },
     avalanche: {
       url: "https://api.avax.network/ext/bc/C/rpc",

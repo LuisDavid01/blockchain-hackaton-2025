@@ -1,4 +1,6 @@
 import { FlatCompat } from "@eslint/eslintrc";
+import nextCoreWebVitals from "eslint-config-next/core-web-vitals";
+import nextTypescript from "eslint-config-next/typescript";
 import prettierPlugin from "eslint-plugin-prettier";
 import { defineConfig } from "eslint/config";
 import path from "node:path";
@@ -15,7 +17,7 @@ export default defineConfig([
     plugins: {
       prettier: prettierPlugin,
     },
-    extends: compat.extends("next/core-web-vitals", "next/typescript", "prettier"),
+    extends: [...nextCoreWebVitals, ...nextTypescript, ...compat.extends("prettier")],
 
     rules: {
       "@typescript-eslint/no-explicit-any": "off",

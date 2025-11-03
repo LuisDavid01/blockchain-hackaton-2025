@@ -3,10 +3,10 @@
 import { useEffect } from "react";
 import { InheritanceTooltip } from "./InheritanceTooltip";
 import { displayTxResult } from "./utilsDisplay";
-import { Abi, AbiFunction } from "abitype";
-import { Address } from "viem";
 import { useQuery } from "@tanstack/react-query";
+import { Abi, AbiFunction } from "abitype";
 import { ethers } from "ethers";
+import { Address } from "viem";
 import { ArrowPathIcon } from "@heroicons/react/24/outline";
 import { useAnimationConfig, useWdkProvider } from "~~/hooks/scaffold-eth";
 import { useTargetNetwork } from "~~/hooks/scaffold-eth/useTargetNetwork";
@@ -39,13 +39,9 @@ export const DisplayVariable = ({
     queryKey: ["contractRead", contractAddress, abiFunction.name, targetNetwork.id, refreshDisplayVariables],
     queryFn: async () => {
       if (!provider) throw new Error("Provider not available");
-      
-      const contract = new ethers.Contract(
-        contractAddress,
-        abi as any,
-        provider
-      );
-      
+
+      const contract = new ethers.Contract(contractAddress, abi as any, provider);
+
       const result = await contract[abiFunction.name]();
       return result;
     },

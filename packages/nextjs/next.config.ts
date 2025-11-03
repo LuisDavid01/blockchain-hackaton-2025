@@ -8,13 +8,13 @@ const nextConfig: NextConfig = {
   },
 
   webpack: (config, { isServer }) => {
-    config.resolve.fallback = { 
-      fs: false, 
-      net: false, 
+    config.resolve.fallback = {
+      fs: false,
+      net: false,
       tls: false,
       "sodium-native": false, // WDK dependency - use JS fallback
     };
-    
+
     // Handle native modules for server-side rendering
     if (isServer) {
       config.externals.push({
@@ -22,7 +22,7 @@ const nextConfig: NextConfig = {
         "sodium-universal": "commonjs sodium-universal",
       });
     }
-    
+
     config.externals.push("pino-pretty", "lokijs", "encoding");
     return config;
   },

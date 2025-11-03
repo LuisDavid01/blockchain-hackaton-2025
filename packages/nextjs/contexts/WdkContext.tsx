@@ -1,10 +1,10 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState, ReactNode, useCallback } from "react";
+import { ReactNode, createContext, useCallback, useContext, useEffect, useState } from "react";
 import WDK from "@tetherto/wdk";
 import WalletManagerEvm from "@tetherto/wdk-wallet-evm";
+import { AVALANCHE_NETWORKS, AvalancheNetwork, DEFAULT_NETWORK, NetworkId } from "~~/config/networks";
 import { SeedVault } from "~~/services/seedVault";
-import { AVALANCHE_NETWORKS, NetworkId, DEFAULT_NETWORK, AvalancheNetwork } from "~~/config/networks";
 
 // WDK Account interface
 export interface WdkAccount {
@@ -22,18 +22,18 @@ export interface WdkContextState {
   isLocked: boolean;
   address: string | null;
   balance: bigint | null;
-  
+
   // Network state
   currentNetwork: AvalancheNetwork;
-  
+
   // WDK instance and account
   wdkInstance: any | null;
   account: WdkAccount | null;
-  
+
   // Loading states
   isLoading: boolean;
   isSwitchingNetwork: boolean;
-  
+
   // Error state
   error: string | null;
 }
@@ -47,10 +47,10 @@ export interface WdkContextActions {
   lockWallet: () => Promise<void>;
   disconnectWallet: () => Promise<void>;
   exportSeedPhrase: () => Promise<string>;
-  
+
   // Network management
   switchNetwork: (networkId: NetworkId) => Promise<void>;
-  
+
   // Data refresh
   refreshBalance: () => Promise<void>;
   refreshAddress: () => Promise<void>;
@@ -93,7 +93,7 @@ export function WdkProvider({ children }: WdkProviderProps) {
   const initializeWdk = useCallback(async (seedPhrase: string, networkId: NetworkId) => {
     try {
       const network = AVALANCHE_NETWORKS[networkId];
-      
+
       // Create WDK instance and register Avalanche wallet
       const wdk = new WDK(seedPhrase).registerWallet("avalanche", WalletManagerEvm, {
         provider: network.rpcUrl,
@@ -101,7 +101,7 @@ export function WdkProvider({ children }: WdkProviderProps) {
 
       // Get account
       const account = await wdk.getAccount("avalanche", 0);
-      
+
       // Get address and balance
       const address = await account.getAddress();
       const balance = await account.getBalance();
@@ -131,22 +131,22 @@ export function WdkProvider({ children }: WdkProviderProps) {
    */
   const createWallet = useCallback(async (): Promise<string> => {
     setState(prev => ({ ...prev, isLoading: true, error: null }));
-    
+
     try {
       // Generate new seed phrase
       const seedPhrase = WDK.getRandomSeedPhrase();
-      
+
       // Save to vault
       await SeedVault.save(seedPhrase);
-      
+
       // Load saved network or use default
       const savedNetwork = (await SeedVault.loadNetwork()) as NetworkId | null;
       const networkId = savedNetwork || DEFAULT_NETWORK;
       await SeedVault.saveNetwork(networkId);
-      
+
       // Initialize WDK
       await initializeWdk(seedPhrase, networkId);
-      
+
       return seedPhrase;
     } catch (error) {
       const errorMsg = error instanceof Error ? error.message : "Failed to create wallet";
@@ -158,49 +158,52 @@ export function WdkProvider({ children }: WdkProviderProps) {
   /**
    * Import existing wallet
    */
-  const importWallet = useCallback(async (seedPhrase: string): Promise<void> => {
-    setState(prev => ({ ...prev, isLoading: true, error: null }));
-    
-    try {
-      // Validate seed phrase (basic check)
-      if (!seedPhrase || seedPhrase.trim().split(/\s+/).length < 12) {
-        throw new Error("Invalid seed phrase. Must be at least 12 words.");
+  const importWallet = useCallback(
+    async (seedPhrase: string): Promise<void> => {
+      setState(prev => ({ ...prev, isLoading: true, error: null }));
+
+      try {
+        // Validate seed phrase (basic check)
+        if (!seedPhrase || seedPhrase.trim().split(/\s+/).length < 12) {
+          throw new Error("Invalid seed phrase. Must be at least 12 words.");
+        }
+
+        // Save to vault
+        await SeedVault.save(seedPhrase.trim());
+
+        // Load saved network or use default
+        const savedNetwork = (await SeedVault.loadNetwork()) as NetworkId | null;
+        const networkId = savedNetwork || DEFAULT_NETWORK;
+        await SeedVault.saveNetwork(networkId);
+
+        // Initialize WDK
+        await initializeWdk(seedPhrase.trim(), networkId);
+      } catch (error) {
+        const errorMsg = error instanceof Error ? error.message : "Failed to import wallet";
+        setState(prev => ({ ...prev, error: errorMsg, isLoading: false }));
+        throw error;
       }
-      
-      // Save to vault
-      await SeedVault.save(seedPhrase.trim());
-      
-      // Load saved network or use default
-      const savedNetwork = (await SeedVault.loadNetwork()) as NetworkId | null;
-      const networkId = savedNetwork || DEFAULT_NETWORK;
-      await SeedVault.saveNetwork(networkId);
-      
-      // Initialize WDK
-      await initializeWdk(seedPhrase.trim(), networkId);
-    } catch (error) {
-      const errorMsg = error instanceof Error ? error.message : "Failed to import wallet";
-      setState(prev => ({ ...prev, error: errorMsg, isLoading: false }));
-      throw error;
-    }
-  }, [initializeWdk]);
+    },
+    [initializeWdk],
+  );
 
   /**
    * Unlock wallet from vault
    */
   const unlockWallet = useCallback(async (): Promise<void> => {
     setState(prev => ({ ...prev, isLoading: true, error: null }));
-    
+
     try {
       // Load seed from vault
       const seedPhrase = await SeedVault.load();
       if (!seedPhrase) {
         throw new Error("No seed phrase found in vault");
       }
-      
+
       // Load saved network
       const savedNetwork = (await SeedVault.loadNetwork()) as NetworkId | null;
       const networkId = savedNetwork || DEFAULT_NETWORK;
-      
+
       // Initialize WDK
       await initializeWdk(seedPhrase, networkId);
     } catch (error) {
@@ -239,36 +242,39 @@ export function WdkProvider({ children }: WdkProviderProps) {
   /**
    * Switch network
    */
-  const switchNetwork = useCallback(async (networkId: NetworkId): Promise<void> => {
-    setState(prev => ({ ...prev, isSwitchingNetwork: true, error: null }));
-    
-    try {
-      // Load seed from vault
-      const seedPhrase = await SeedVault.load();
-      if (!seedPhrase) {
-        throw new Error("No seed phrase found. Please unlock wallet first.");
+  const switchNetwork = useCallback(
+    async (networkId: NetworkId): Promise<void> => {
+      setState(prev => ({ ...prev, isSwitchingNetwork: true, error: null }));
+
+      try {
+        // Load seed from vault
+        const seedPhrase = await SeedVault.load();
+        if (!seedPhrase) {
+          throw new Error("No seed phrase found. Please unlock wallet first.");
+        }
+
+        // Save new network selection
+        await SeedVault.saveNetwork(networkId);
+
+        // Re-initialize WDK with new network
+        await initializeWdk(seedPhrase, networkId);
+
+        setState(prev => ({ ...prev, isSwitchingNetwork: false }));
+      } catch (error) {
+        const errorMsg = error instanceof Error ? error.message : "Failed to switch network";
+        setState(prev => ({ ...prev, error: errorMsg, isSwitchingNetwork: false }));
+        throw error;
       }
-      
-      // Save new network selection
-      await SeedVault.saveNetwork(networkId);
-      
-      // Re-initialize WDK with new network
-      await initializeWdk(seedPhrase, networkId);
-      
-      setState(prev => ({ ...prev, isSwitchingNetwork: false }));
-    } catch (error) {
-      const errorMsg = error instanceof Error ? error.message : "Failed to switch network";
-      setState(prev => ({ ...prev, error: errorMsg, isSwitchingNetwork: false }));
-      throw error;
-    }
-  }, [initializeWdk]);
+    },
+    [initializeWdk],
+  );
 
   /**
    * Refresh balance
    */
   const refreshBalance = useCallback(async (): Promise<void> => {
     if (!state.account) return;
-    
+
     try {
       const balance = await state.account.getBalance();
       setState(prev => ({ ...prev, balance }));
@@ -282,7 +288,7 @@ export function WdkProvider({ children }: WdkProviderProps) {
    */
   const refreshAddress = useCallback(async (): Promise<void> => {
     if (!state.account) return;
-    
+
     try {
       const address = await state.account.getAddress();
       setState(prev => ({ ...prev, address }));
@@ -297,15 +303,19 @@ export function WdkProvider({ children }: WdkProviderProps) {
    */
   useEffect(() => {
     let isMounted = true;
-    
+
     const autoInitialize = async () => {
       if (!isMounted) return;
-      
+
       const vaultExists = await SeedVault.exists();
       const shouldAutoUnlock = SeedVault.shouldAutoUnlock();
-      
-      console.log("🔍 Checking wallet state:", { vaultExists, shouldAutoUnlock, isDev: process.env.NODE_ENV === "development" });
-      
+
+      console.log("🔍 Checking wallet state:", {
+        vaultExists,
+        shouldAutoUnlock,
+        isDev: process.env.NODE_ENV === "development",
+      });
+
       if (vaultExists && shouldAutoUnlock) {
         // Auto-unlock existing wallet in dev mode
         try {
@@ -343,9 +353,9 @@ export function WdkProvider({ children }: WdkProviderProps) {
         console.log("ℹ️ No wallet found and auto-create disabled (production mode)");
       }
     };
-    
+
     autoInitialize();
-    
+
     return () => {
       isMounted = false;
     };
@@ -379,4 +389,3 @@ export function useWdk(): WdkContextValue {
 }
 
 export default WdkContext;
-

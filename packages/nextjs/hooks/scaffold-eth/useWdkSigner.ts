@@ -1,4 +1,4 @@
-import { useWdk, WdkAccount } from "~~/contexts/WdkContext";
+import { WdkAccount, useWdk } from "~~/contexts/WdkContext";
 
 /**
  * Hook to access the WDK signer (account)
@@ -9,4 +9,3 @@ export function useWdkSigner(): WdkAccount | null {
   const { account } = useWdk();
   return account;
 }
-

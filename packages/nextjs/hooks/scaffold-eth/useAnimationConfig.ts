@@ -1,18 +1,25 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const ANIMATION_TIME = 2000;
 
-export function useAnimationConfig(data: any) {
+export function useAnimationConfig<T = any>(data: T) {
   const [showAnimation, setShowAnimation] = useState(false);
-  const [prevData, setPrevData] = useState();
-
+  const prevDataRef = useRef<T>(undefined as T);
   useEffect(() => {
-    if (prevData !== undefined && prevData !== data) {
+    // Solo trigger la animación si hay un cambio real
+    if (prevDataRef.current !== undefined && prevDataRef.current !== data) {
       setShowAnimation(true);
-      setTimeout(() => setShowAnimation(false), ANIMATION_TIME);
+      const timer = setTimeout(() => {
+        setShowAnimation(false);
+      }, ANIMATION_TIME);
+
+      // Cleanup del timeout si el componente se desmonta
+      return () => clearTimeout(timer);
     }
-    setPrevData(data);
-  }, [data, prevData]);
+
+    // Actualizar la referencia después de la verificación
+    prevDataRef.current = data;
+  }, [data]);
 
   return {
     showAnimation,

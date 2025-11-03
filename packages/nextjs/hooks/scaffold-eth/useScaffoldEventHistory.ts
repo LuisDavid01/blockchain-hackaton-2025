@@ -4,12 +4,8 @@ import { ExtractAbiEventNames } from "abitype";
 import { ethers } from "ethers";
 import { useWdk } from "~~/contexts/WdkContext";
 import { useDeployedContractInfo } from "~~/hooks/scaffold-eth";
-import { createWdkProvider, createReadContract } from "~~/utils/scaffold-eth/wdkContract";
-import {
-  ContractAbi,
-  ContractName,
-  UseScaffoldEventHistoryConfig,
-} from "~~/utils/scaffold-eth/contract";
+import { ContractAbi, ContractName, UseScaffoldEventHistoryConfig } from "~~/utils/scaffold-eth/contract";
+import { createReadContract, createWdkProvider } from "~~/utils/scaffold-eth/wdkContract";
 
 /**
  * @deprecated **Recommended only for local (hardhat/anvil) chains and development.**
@@ -36,7 +32,6 @@ export const useScaffoldEventHistory = <
   enabled = true,
 }: UseScaffoldEventHistoryConfig<TContractName, TEventName, false, false, false>) => {
   const { currentNetwork, isInitialized } = useWdk();
-  const [events, setEvents] = useState<any[]>([]);
 
   const { data: deployedContractData } = useDeployedContractInfo({
     contractName,
@@ -50,20 +45,20 @@ export const useScaffoldEventHistory = <
 
     try {
       const provider = createWdkProvider(currentNetwork.rpcUrl);
-      const contract = createReadContract(deployedContractData.address, deployedContractData.abi, provider);
+      const contract = createReadContract(deployedContractData.address, [...deployedContractData.abi], provider);
 
       // Get current block number if toBlock not specified
-      const currentBlock = toBlock || await provider.getBlockNumber();
+      const currentBlock = toBlock || (await provider.getBlockNumber());
       const startBlock = fromBlock || 0;
 
       // Create event filter
       const filter = contract.filters[eventName as string]();
-      
+
       // Query events
       const logs = await contract.queryFilter(
         filter,
-        typeof startBlock === 'bigint' ? Number(startBlock) : startBlock,
-        typeof currentBlock === 'bigint' ? Number(currentBlock) : currentBlock
+        typeof startBlock === "bigint" ? Number(startBlock) : startBlock,
+        typeof currentBlock === "bigint" ? Number(currentBlock) : currentBlock,
       );
 
       // Parse events
@@ -96,17 +91,11 @@ export const useScaffoldEventHistory = <
     queryKey: ["scaffold-event-history", contractName, eventName, fromBlock, toBlock, currentNetwork.chainId],
     queryFn: fetchEvents,
     enabled: enabled && isInitialized && !!deployedContractData?.address,
-    refetchInterval: watch ? 10000 : false, // Poll every 10 seconds if watching
+    refetchInterval: watch ? 10000 : false,
   });
 
-  useEffect(() => {
-    if (data) {
-      setEvents(data);
-    }
-  }, [data]);
-
   return {
-    data: events,
+    data: data || [],
     isLoading,
     error,
     refetch,

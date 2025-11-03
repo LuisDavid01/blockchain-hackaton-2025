@@ -31,22 +31,22 @@ The wallet state is managed through the `WdkContext` provider:
 
 ```typescript
 const {
-  isInitialized,      // Wallet exists
-  isLocked,           // Wallet locked state
-  address,            // Current address
-  balance,            // Current balance
-  currentNetwork,     // Active network
+  isInitialized, // Wallet exists
+  isLocked, // Wallet locked state
+  address, // Current address
+  balance, // Current balance
+  currentNetwork, // Active network
   isSwitchingNetwork, // Network switch in progress
-  error,              // Error messages
-  
+  error, // Error messages
+
   // Actions
-  createWallet,       // Generate new wallet
-  importWallet,       // Import from seed
-  unlockWallet,       // Unlock from vault
-  lockWallet,         // Lock wallet
-  disconnectWallet,   // Remove wallet
-  exportSeedPhrase,   // Export seed
-  switchNetwork,      // Change network
+  createWallet, // Generate new wallet
+  importWallet, // Import from seed
+  unlockWallet, // Unlock from vault
+  lockWallet, // Lock wallet
+  disconnectWallet, // Remove wallet
+  exportSeedPhrase, // Export seed
+  switchNetwork, // Change network
 } = useWdk();
 ```
 
@@ -55,6 +55,7 @@ const {
 ### 1. Wallet Creation
 
 **Flow:**
+
 1. User clicks "Create New Wallet"
 2. WDK generates random seed phrase
 3. Seed is encrypted and saved to vault
@@ -63,6 +64,7 @@ const {
 6. Wallet becomes active
 
 **Security:**
+
 - Seed phrase shown only once during creation
 - Requires explicit confirmation before proceeding
 - Warning about offline backup importance
@@ -71,6 +73,7 @@ const {
 ### 2. Wallet Import
 
 **Flow:**
+
 1. User clicks "Import Existing Wallet"
 2. User enters 12 or 24-word seed phrase
 3. Seed is validated
@@ -78,6 +81,7 @@ const {
 5. Wallet is initialized with imported seed
 
 **Validation:**
+
 - Minimum 12 words required
 - Whitespace trimmed
 - Error handling for invalid seeds
@@ -85,17 +89,20 @@ const {
 ### 3. Network Switching
 
 **Supported Networks:**
+
 - Local (Chain ID: 43112)
 - Fuji Testnet (Chain ID: 43113)
 - Mainnet (Chain ID: 43114)
 
 **Flow:**
+
 1. User selects network from dropdown
 2. WDK re-initializes with new RPC endpoint
 3. Address and balance refresh
 4. UI updates to show new network
 
 **Persistence:**
+
 - Selected network saved to IndexedDB
 - Persists across browser sessions
 - Restored on wallet unlock
@@ -103,6 +110,7 @@ const {
 ### 4. Seed Phrase Export
 
 **Flow:**
+
 1. User clicks "Export Seed Phrase"
 2. Warning modal appears
 3. User confirms export
@@ -111,6 +119,7 @@ const {
 6. User must close modal manually
 
 **Security:**
+
 - Two-step confirmation process
 - Warning about screen visibility
 - Seed never logged or transmitted
@@ -119,17 +128,20 @@ const {
 ### 5. Lock/Unlock
 
 **Lock:**
+
 - Clears wallet from memory
 - Keeps encrypted seed in vault
 - Requires unlock to access
 
 **Unlock:**
+
 - Loads encrypted seed from vault
 - Decrypts seed
 - Re-initializes WDK
 - Restores previous network selection
 
 **Auto-Unlock:**
+
 - Enabled in development mode (`NODE_ENV=development`)
 - Disabled in production for security
 - Configurable in `SeedVault.shouldAutoUnlock()`
@@ -137,6 +149,7 @@ const {
 ### 6. Disconnect Wallet
 
 **Flow:**
+
 1. User clicks "Disconnect"
 2. Confirmation modal appears with warning
 3. User confirms disconnect
@@ -144,6 +157,7 @@ const {
 5. Wallet state reset to initial
 
 **Warning:**
+
 - Permanent action
 - Cannot be undone without seed phrase
 - User must have seed phrase backed up
@@ -172,7 +186,7 @@ await importWallet(seedPhrase);
 // 4. Get account, address, balance
 
 // Switch Network
-await switchNetwork('fuji');
+await switchNetwork("fuji");
 // Internally:
 // 1. Load seed from vault
 // 2. Get new network config
@@ -190,10 +204,12 @@ The wallet uses a secure seed vault (`packages/nextjs/services/seedVault.ts`) fo
 **Algorithm:** AES-GCM with 256-bit keys
 
 **Storage:**
+
 - **Primary:** IndexedDB
 - **Fallback:** localStorage
 
 **Key Management:**
+
 - Device-specific encryption key
 - Auto-generated on first use
 - Stored separately from encrypted seed
@@ -230,6 +246,7 @@ const networkId = await SeedVault.loadNetwork();
 ### Address Display
 
 Uses the `<Address>` component from Scaffold-ETH:
+
 ```typescript
 <Address address={address} />
 ```
@@ -237,6 +254,7 @@ Uses the `<Address>` component from Scaffold-ETH:
 ### Balance Display
 
 Uses the `<Balance>` component from Scaffold-ETH:
+
 ```typescript
 <Balance address={address} />
 ```
@@ -244,6 +262,7 @@ Uses the `<Balance>` component from Scaffold-ETH:
 ### Network Selector
 
 Custom dropdown with network indicators:
+
 ```typescript
 <select value={currentNetwork.id} onChange={handleNetworkSwitch}>
   {Object.values(AVALANCHE_NETWORKS).map(network => (
@@ -255,6 +274,7 @@ Custom dropdown with network indicators:
 ### Modals
 
 DaisyUI modals for:
+
 - Export seed phrase confirmation
 - Disconnect wallet warning
 
@@ -263,6 +283,7 @@ DaisyUI modals for:
 The component handles various error scenarios:
 
 1. **Invalid Seed Phrase:**
+
    ```typescript
    if (!seedPhrase || seedPhrase.trim().split(/\s+/).length < 12) {
      throw new Error("Invalid seed phrase");
@@ -286,15 +307,17 @@ The component handles various error scenarios:
 ### For Developers
 
 1. **Never Log Seeds:**
+
    ```typescript
    // BAD
-   console.log('Seed:', seedPhrase);
-   
+   console.log("Seed:", seedPhrase);
+
    // GOOD
-   console.log('Wallet created successfully');
+   console.log("Wallet created successfully");
    ```
 
 2. **Validate User Input:**
+
    ```typescript
    const trimmedSeed = seedPhrase.trim();
    const wordCount = trimmedSeed.split(/\s+/).length;
@@ -402,6 +425,7 @@ Potential improvements:
 ## Support
 
 For issues or questions:
+
 - Check the main [README.md](../../../README.md)
 - Review [Scaffold-ETH 2 docs](https://docs.scaffoldeth.io)
 - See [WDK documentation](https://docs.wallet.tether.io/)

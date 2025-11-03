@@ -8,12 +8,12 @@ import { useWdk } from "~~/contexts/WdkContext";
  */
 export function useWdkProvider(): ethers.JsonRpcProvider | null {
   const { currentNetwork, isInitialized } = useWdk();
-  
+
   return useMemo(() => {
     if (!isInitialized || !currentNetwork?.rpcUrl) {
       return null;
     }
-    
+
     try {
       return new ethers.JsonRpcProvider(currentNetwork.rpcUrl);
     } catch (error) {
@@ -22,4 +22,3 @@ export function useWdkProvider(): ethers.JsonRpcProvider | null {
     }
   }, [currentNetwork?.rpcUrl, isInitialized]);
 }
-

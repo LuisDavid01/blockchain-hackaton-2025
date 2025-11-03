@@ -49,12 +49,7 @@ export const Footer = () => {
               <p className="m-0 text-center">
                 Built with <HeartIcon className="inline-block h-4 w-4" /> by
               </p>
-              <a
-                className="link"
-                href="https://dojocoding.io/"
-                target="_blank"
-                rel="noreferrer"
-              >
+              <a className="link" href="https://dojocoding.io/" target="_blank" rel="noreferrer">
                 Dojo Coding
               </a>
             </div>

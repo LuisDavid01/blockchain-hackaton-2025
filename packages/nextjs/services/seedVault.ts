@@ -1,9 +1,9 @@
 /**
  * Secure Seed Vault Implementation
- * 
+ *
  * Uses WebCrypto API (AES-GCM) with auto-generated device key for encryption.
  * Stores encrypted seed in IndexedDB (primary) with localStorage fallback.
- * 
+ *
  * Security features:
  * - AES-GCM 256-bit encryption
  * - Auto-unlock in development, manual unlock in production
@@ -39,7 +39,7 @@ function openDB(): Promise<IDBDatabase> {
     request.onerror = () => reject(request.error);
     request.onsuccess = () => resolve(request.result);
 
-    request.onupgradeneeded = (event) => {
+    request.onupgradeneeded = event => {
       const db = (event.target as IDBOpenDBRequest).result;
       if (!db.objectStoreNames.contains(STORE_NAME)) {
         db.createObjectStore(STORE_NAME);
@@ -125,7 +125,7 @@ async function getOrCreateDeviceKey(): Promise<CryptoKey> {
         length: 256,
       },
       true,
-      ["encrypt", "decrypt"]
+      ["encrypt", "decrypt"],
     );
 
     // Export and store the key
@@ -146,7 +146,7 @@ async function getOrCreateDeviceKey(): Promise<CryptoKey> {
       length: 256,
     },
     true,
-    ["encrypt", "decrypt"]
+    ["encrypt", "decrypt"],
   );
 }
 
@@ -155,10 +155,10 @@ async function getOrCreateDeviceKey(): Promise<CryptoKey> {
  */
 async function encryptSeed(seedPhrase: string): Promise<EncryptedData> {
   const deviceKey = await getOrCreateDeviceKey();
-  
+
   // Generate random IV
   const iv = crypto.getRandomValues(new Uint8Array(12));
-  
+
   // Generate salt (not used for key derivation but stored for future enhancements)
   const salt = crypto.getRandomValues(new Uint8Array(16));
 
@@ -173,7 +173,7 @@ async function encryptSeed(seedPhrase: string): Promise<EncryptedData> {
       iv: iv,
     },
     deviceKey,
-    data
+    data,
   );
 
   // Convert to base64 for storage
@@ -201,7 +201,7 @@ async function decryptSeed(encryptedData: EncryptedData): Promise<string> {
       iv: iv,
     },
     deviceKey,
-    ciphertext
+    ciphertext,
   );
 
   // Decode to string
@@ -294,4 +294,3 @@ export class SeedVault {
 }
 
 export default SeedVault;
-

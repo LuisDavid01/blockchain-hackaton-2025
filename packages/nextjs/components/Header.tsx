@@ -6,9 +6,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Bars3Icon, BugAntIcon } from "@heroicons/react/24/outline";
 import { WdkConnectButton } from "~~/components/scaffold-eth/WdkConnectButton";
-import { useOutsideClick } from "~~/hooks/scaffold-eth";
-import { useWdk } from "~~/contexts/WdkContext";
 import { AVALANCHE_NETWORKS, NetworkId } from "~~/config/networks";
+import { useWdk } from "~~/contexts/WdkContext";
+import { useOutsideClick } from "~~/hooks/scaffold-eth";
 
 type HeaderMenuLink = {
   label: string;
@@ -68,7 +68,7 @@ const NetworkSelector = () => {
   const handleNetworkSwitch = async (networkId: NetworkId) => {
     // Close the dropdown
     networkMenuRef.current?.removeAttribute("open");
-    
+
     try {
       await switchNetwork(networkId);
     } catch (error) {
@@ -91,9 +91,9 @@ const NetworkSelector = () => {
 
   return (
     <details className="dropdown dropdown-end" ref={networkMenuRef}>
-      <summary 
+      <summary
         className="btn btn-sm btn-ghost gap-2 normal-case list-none cursor-pointer"
-        style={{ listStyle: 'none' }}
+        style={{ listStyle: "none" }}
       >
         <div className={`w-2.5 h-2.5 rounded-full ${networkColor}`} />
         <span className="hidden sm:inline text-sm font-medium">{currentNetwork.displayName}</span>
@@ -104,11 +104,11 @@ const NetworkSelector = () => {
         </svg>
       </summary>
       <ul className="menu dropdown-content mt-2 p-2 shadow-lg bg-base-200 rounded-box w-56 z-50">
-        {Object.values(AVALANCHE_NETWORKS).map((network) => (
+        {Object.values(AVALANCHE_NETWORKS).map(network => (
           <li key={network.id}>
             <button
               onClick={() => handleNetworkSwitch(network.id as NetworkId)}
-              className={`flex items-center gap-3 ${currentNetwork.id === network.id ? 'active' : ''}`}
+              className={`flex items-center gap-3 ${currentNetwork.id === network.id ? "active" : ""}`}
               disabled={isSwitchingNetwork}
             >
               <div className={`w-2.5 h-2.5 rounded-full ${networkColors[network.id as keyof typeof networkColors]}`} />
@@ -116,9 +116,7 @@ const NetworkSelector = () => {
                 <span className="font-medium">{network.displayName}</span>
                 <span className="text-xs text-base-content/60">Chain ID: {network.chainId}</span>
               </div>
-              {currentNetwork.id === network.id && (
-                <span className="ml-auto text-success">✓</span>
-              )}
+              {currentNetwork.id === network.id && <span className="ml-auto text-success">✓</span>}
             </button>
           </li>
         ))}

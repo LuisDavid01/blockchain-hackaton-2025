@@ -1,8 +1,8 @@
+import { useTargetNetwork } from "./useTargetNetwork";
+import { useWdkProvider } from "./useWdkProvider";
 import { useQuery } from "@tanstack/react-query";
 import { Address } from "viem";
 import { useWdk } from "~~/contexts/WdkContext";
-import { useWdkProvider } from "./useWdkProvider";
-import { useTargetNetwork } from "./useTargetNetwork";
 
 type UseWatchBalanceParameters = {
   address?: Address;
@@ -28,7 +28,7 @@ export const useWatchBalance = ({ address }: UseWatchBalanceParameters) => {
     queryKey: ["balance", targetAddress, targetNetwork.id],
     queryFn: async () => {
       if (!targetAddress) return null;
-      
+
       try {
         // If querying our own address and we have an account, use it directly
         if (targetAddress === wdkAddress && account) {
@@ -40,13 +40,13 @@ export const useWatchBalance = ({ address }: UseWatchBalanceParameters) => {
             value: balanceValue,
           };
         }
-        
+
         // For other addresses (including contracts), use the provider
         if (!provider) {
           console.warn("Provider not available for balance check");
           return null;
         }
-        
+
         const balanceValue = await provider.getBalance(targetAddress);
         return {
           decimals: targetNetwork.nativeCurrency.decimals,

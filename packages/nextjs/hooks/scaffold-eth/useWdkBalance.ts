@@ -36,4 +36,3 @@ export function useWdkBalance(options?: { watch?: boolean; refetchInterval?: num
     },
   };
 }
-

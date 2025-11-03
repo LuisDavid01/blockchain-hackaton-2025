@@ -3,8 +3,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { InheritanceTooltip } from "./InheritanceTooltip";
 import { Abi, AbiFunction } from "abitype";
-import { Address, TransactionReceipt } from "viem";
 import { ethers } from "ethers";
+import { Address, TransactionReceipt } from "viem";
 import {
   ContractInput,
   TxReceipt,
@@ -15,8 +15,8 @@ import {
 } from "~~/app/debug/_components/contract";
 import { IntegerInput } from "~~/components/scaffold-eth";
 import { useWdk } from "~~/contexts/WdkContext";
-import { useTargetNetwork } from "~~/hooks/scaffold-eth/useTargetNetwork";
 import { useWdkProvider } from "~~/hooks/scaffold-eth";
+import { useTargetNetwork } from "~~/hooks/scaffold-eth/useTargetNetwork";
 import { notification } from "~~/utils/scaffold-eth";
 
 type WriteOnlyFunctionFormProps = {
@@ -41,7 +41,7 @@ export const WriteOnlyFunctionForm = ({
   const { account, currentNetwork, isInitialized } = useWdk();
   const provider = useWdkProvider();
   const { targetNetwork } = useTargetNetwork();
-  
+
   const writeDisabled = !isInitialized || !account || currentNetwork.chainId !== targetNetwork.id;
 
   const handleWrite = async () => {
@@ -56,23 +56,23 @@ export const WriteOnlyFunctionForm = ({
       const contractInterface = new ethers.Interface(abi as any);
       const args = getParsedContractFunctionArgs(form);
       const data = contractInterface.encodeFunctionData(abiFunction.name, args);
-      
+
       const value = txValue ? BigInt(txValue) : BigInt(0);
-      
+
       // Send transaction using WDK account
       const tx = await account.sendTransaction({
         to: contractAddress,
         value: value,
         data: data,
       });
-      
+
       notification.info("Transaction sent! Waiting for confirmation...");
       setTxHash(tx.hash);
-      
+
       // Wait for transaction receipt
       const receipt = await provider.waitForTransaction(tx.hash);
       setDisplayedTxResult(receipt as any);
-      
+
       notification.success("Transaction confirmed!");
       onChange();
     } catch (e: any) {

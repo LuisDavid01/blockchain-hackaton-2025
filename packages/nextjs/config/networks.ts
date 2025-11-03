@@ -65,4 +65,3 @@ export function getNetworkById(id: NetworkId): AvalancheNetwork {
 export function getNetworkByChainId(chainId: number): AvalancheNetwork | undefined {
   return Object.values(AVALANCHE_NETWORKS).find(network => network.chainId === chainId);
 }
-

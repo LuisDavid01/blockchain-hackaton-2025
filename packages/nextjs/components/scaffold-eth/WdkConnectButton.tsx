@@ -1,18 +1,14 @@
 "use client";
 
-import { useWdk } from "~~/contexts/WdkContext";
 import { Address } from "~~/components/scaffold-eth";
+import { useWdk } from "~~/contexts/WdkContext";
 
 /**
  * WDK Connect Button Component
  * Shows wallet status and address in header
  */
 export function WdkConnectButton() {
-  const {
-    isInitialized,
-    isLocked,
-    address,
-  } = useWdk();
+  const { isInitialized, isLocked, address } = useWdk();
 
   // Not initialized - show prompt to connect
   if (!isInitialized) {
@@ -39,4 +35,3 @@ export function WdkConnectButton() {
     </a>
   );
 }
-

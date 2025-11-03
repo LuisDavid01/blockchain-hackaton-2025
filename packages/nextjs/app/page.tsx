@@ -14,19 +14,17 @@ const Home: NextPage = () => {
       <div className="flex items-center flex-col grow pt-10">
         <div className="px-5 max-w-4xl mx-auto">
           <h1 className="text-center">
-            <span className="block text-2xl mb-2">Welcome to</span>
-            <span className="block text-4xl font-bold">WDK Avalanche Starter</span>
+            <span className="block text-2xl mb-2">Welcome to my incredible website!</span>
+            <span className="block text-4xl font-bold">hola sebastian!</span>
             <span className="block text-lg mt-2 text-base-content/70">Powered by Scaffold-ETH 2</span>
           </h1>
-          
+
           <div className="flex justify-center items-center space-x-2 flex-col mt-8">
             {isInitialized && address ? (
               <>
                 <p className="my-2 font-medium">Connected Address:</p>
                 <Address address={address as `0x${string}`} />
-                <p className="text-sm text-base-content/70 mt-2">
-                  Network: {currentNetwork.displayName}
-                </p>
+                <p className="text-sm text-base-content/70 mt-2">Network: {currentNetwork.displayName}</p>
               </>
             ) : (
               <div className="text-center">
@@ -43,19 +41,26 @@ const Home: NextPage = () => {
               <div>
                 <h3 className="font-bold">🚀 Getting Started</h3>
                 <div className="text-sm space-y-2 mt-2">
-                  <p>1. Start local Avalanche node: <code className="bg-base-300 px-2 py-1 rounded">yarn avalanche:up</code></p>
-                  <p>2. Deploy contracts: <code className="bg-base-300 px-2 py-1 rounded">yarn deploy:local</code></p>
-                  <p>3. Connect your wallet on the <Link href="/wallet" className="link">Wallet page</Link></p>
+                  <p>
+                    1. Start local Avalanche node:{" "}
+                    <code className="bg-base-300 px-2 py-1 rounded">yarn avalanche:up</code>
+                  </p>
+                  <p>
+                    2. Deploy contracts: <code className="bg-base-300 px-2 py-1 rounded">yarn deploy:local</code>
+                  </p>
+                  <p>
+                    3. Connect your wallet on the{" "}
+                    <Link href="/wallet" className="link">
+                      Wallet page
+                    </Link>
+                  </p>
                 </div>
               </div>
             </div>
 
             <p className="text-center text-lg">
               Edit your smart contract{" "}
-              <code className="italic bg-base-300 text-base font-bold px-2 py-1 rounded">
-                YourContract.sol
-              </code>{" "}
-              in{" "}
+              <code className="italic bg-base-300 text-base font-bold px-2 py-1 rounded">YourContract.sol</code> in{" "}
               <code className="italic bg-base-300 text-base font-bold px-2 py-1 rounded">
                 packages/hardhat/contracts
               </code>

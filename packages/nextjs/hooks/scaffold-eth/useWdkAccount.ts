@@ -1,4 +1,4 @@
-import { useWdk, WdkAccount } from "~~/contexts/WdkContext";
+import { WdkAccount, useWdk } from "~~/contexts/WdkContext";
 
 /**
  * Hook to access the current WDK account
@@ -8,4 +8,3 @@ export function useWdkAccount(): WdkAccount | null {
   const { account } = useWdk();
   return account;
 }
-

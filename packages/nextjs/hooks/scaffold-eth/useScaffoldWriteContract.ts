@@ -1,9 +1,8 @@
-import { useState, useCallback } from "react";
+import { useCallback, useState } from "react";
 import { ExtractAbiFunctionNames } from "abitype";
 import { useWdk } from "~~/contexts/WdkContext";
 import { useDeployedContractInfo } from "~~/hooks/scaffold-eth";
 import { notification } from "~~/utils/scaffold-eth";
-import { encodeContractCall, executeWriteTransaction, estimateTransactionFee } from "~~/utils/scaffold-eth/wdkContract";
 import {
   ContractAbi,
   ContractName,
@@ -11,6 +10,7 @@ import {
   ScaffoldWriteContractVariables,
   UseScaffoldWriteConfig,
 } from "~~/utils/scaffold-eth/contract";
+import { encodeContractCall, estimateTransactionFee, executeWriteTransaction } from "~~/utils/scaffold-eth/wdkContract";
 
 type ScaffoldWriteContractReturnType<TContractName extends ContractName> = {
   writeContractAsync: <
@@ -19,12 +19,12 @@ type ScaffoldWriteContractReturnType<TContractName extends ContractName> = {
     variables: ScaffoldWriteContractVariables<TContractName, TFunctionName>,
     options?: ScaffoldWriteContractOptions,
   ) => Promise<{ hash: string } | undefined>;
-  
+
   writeContract: <TFunctionName extends ExtractAbiFunctionNames<ContractAbi<TContractName>, "nonpayable" | "payable">>(
     variables: ScaffoldWriteContractVariables<TContractName, TFunctionName>,
     options?: Omit<ScaffoldWriteContractOptions, "onBlockConfirmation" | "blockConfirmations">,
   ) => void;
-  
+
   isMining: boolean;
   isPending: boolean;
   data: { hash: string } | undefined;
@@ -52,7 +52,7 @@ export function useScaffoldWriteContract<TContractName extends ContractName>(
     typeof configOrName === "string"
       ? { contractName: configOrName, chainId: undefined }
       : (configOrName as UseScaffoldWriteConfig<TContractName>);
-  
+
   const { contractName, chainId } = finalConfig;
 
   const { currentNetwork, account, address, isInitialized } = useWdk();
@@ -101,11 +101,7 @@ export function useScaffoldWriteContract<TContractName extends ContractName>(
         const { functionName, args, value } = variables as any;
 
         // Encode the contract call
-        const data = encodeContractCall(
-          deployedContractData.abi as any[],
-          functionName,
-          args || []
-        );
+        const data = encodeContractCall(deployedContractData.abi as any[], functionName, args || []);
 
         // Convert value to bigint if provided
         const valueBigInt = value ? BigInt(value.toString()) : 0n;
@@ -113,12 +109,7 @@ export function useScaffoldWriteContract<TContractName extends ContractName>(
         // Estimate gas if needed
         if (!finalConfig?.disableSimulate) {
           try {
-            const fee = await estimateTransactionFee(
-              account,
-              deployedContractData.address,
-              data,
-              valueBigInt
-            );
+            const fee = await estimateTransactionFee(account, deployedContractData.address, data, valueBigInt);
             console.log(`Estimated transaction fee: ${fee.toString()}`);
           } catch (estimateError) {
             console.warn("Gas estimation failed, proceeding anyway:", estimateError);
@@ -127,18 +118,11 @@ export function useScaffoldWriteContract<TContractName extends ContractName>(
 
         // Execute the transaction
         notification.loading("Sending transaction...");
-        const result = await executeWriteTransaction(
-          account,
-          deployedContractData.address,
-          data,
-          valueBigInt
-        );
+        const result = await executeWriteTransaction(account, deployedContractData.address, data, valueBigInt);
 
         setData(result);
         notification.remove();
-        notification.success(
-          `Transaction sent successfully! Hash: ${result.hash}`
-        );
+        notification.success(`Transaction sent successfully! Hash: ${result.hash}`);
 
         // Call success callback if provided
         if (options?.onSuccess) {
@@ -151,19 +135,19 @@ export function useScaffoldWriteContract<TContractName extends ContractName>(
         setError(e);
         notification.remove();
         notification.error(errorMessage);
-        
+
         // Call error callback if provided
         if (options?.onError) {
           options.onError(e, variables as any, undefined);
         }
-        
+
         throw e;
       } finally {
         setIsMining(false);
         setIsPending(false);
       }
     },
-    [deployedContractData, account, address, isInitialized, currentNetwork, finalConfig?.disableSimulate]
+    [deployedContractData, account, address, isInitialized, currentNetwork, finalConfig?.disableSimulate],
   );
 
   const writeContract = useCallback(
@@ -175,7 +159,7 @@ export function useScaffoldWriteContract<TContractName extends ContractName>(
         console.error("Write contract error:", error);
       });
     },
-    [writeContractAsync]
+    [writeContractAsync],
   );
 
   return {

@@ -2,13 +2,13 @@ import { useQuery } from "@tanstack/react-query";
 import type { ExtractAbiFunctionNames } from "abitype";
 import { useWdk } from "~~/contexts/WdkContext";
 import { useDeployedContractInfo } from "~~/hooks/scaffold-eth";
-import { createWdkProvider, createReadContract, callReadFunction } from "~~/utils/scaffold-eth/wdkContract";
 import {
   AbiFunctionReturnType,
   ContractAbi,
   ContractName,
   UseScaffoldReadConfig,
 } from "~~/utils/scaffold-eth/contract";
+import { callReadFunction, createReadContract, createWdkProvider } from "~~/utils/scaffold-eth/wdkContract";
 
 /**
  * Wrapper hook for reading contract data using WDK
@@ -28,7 +28,7 @@ export const useScaffoldReadContract = <
   ...readConfig
 }: UseScaffoldReadConfig<TContractName, TFunctionName>) => {
   const { currentNetwork, isInitialized } = useWdk();
-  
+
   const { data: deployedContract } = useDeployedContractInfo({
     contractName,
     chainId: currentNetwork.chainId as any,
@@ -50,15 +50,16 @@ export const useScaffoldReadContract = <
         const contract = createReadContract(deployedContract.address, [...deployedContract.abi] as any[], provider);
 
         // Call the read function
-        const result = await callReadFunction(contract, functionName as string, args as any[] || []);
-        
+        const result = await callReadFunction(contract, functionName as string, (args as any[]) || []);
+
         return result;
       } catch (error) {
         console.error(`Error reading ${String(functionName)} from ${contractName}:`, error);
         throw error;
       }
     },
-    enabled: isInitialized && !!deployedContract?.address && (!Array.isArray(args) || !args.some(arg => arg === undefined)),
+    enabled:
+      isInitialized && !!deployedContract?.address && (!Array.isArray(args) || !args.some(arg => arg === undefined)),
     refetchInterval: defaultWatch ? 10000 : false, // Poll every 10 seconds if watching
     ...queryOptions,
   });

@@ -1,5 +1,5 @@
-import { useWdk } from "~~/contexts/WdkContext";
 import { AvalancheNetwork, NetworkId } from "~~/config/networks";
+import { useWdk } from "~~/contexts/WdkContext";
 
 interface UseWdkNetworkReturn {
   currentNetwork: AvalancheNetwork;
@@ -13,11 +13,10 @@ interface UseWdkNetworkReturn {
  */
 export function useWdkNetwork(): UseWdkNetworkReturn {
   const { currentNetwork, switchNetwork, isSwitchingNetwork } = useWdk();
-  
+
   return {
     currentNetwork,
     switchNetwork,
     isSwitchingNetwork,
   };
 }
-
