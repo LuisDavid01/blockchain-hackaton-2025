@@ -101,7 +101,7 @@ export function useScaffoldWriteContract<TContractName extends ContractName>(
         const { functionName, args, value } = variables as any;
 
         // Encode the contract call
-        const data = encodeContractCall(deployedContractData.abi as any[], functionName, args || []);
+        const data = encodeContractCall([...deployedContractData.abi], functionName, args || []);
 
         // Convert value to bigint if provided
         const valueBigInt = value ? BigInt(value.toString()) : 0n;
@@ -121,7 +121,6 @@ export function useScaffoldWriteContract<TContractName extends ContractName>(
         const result = await executeWriteTransaction(account, deployedContractData.address, data, valueBigInt);
 
         setData(result);
-        notification.remove();
         notification.success(`Transaction sent successfully! Hash: ${result.hash}`);
 
         // Call success callback if provided
@@ -133,7 +132,6 @@ export function useScaffoldWriteContract<TContractName extends ContractName>(
       } catch (e: any) {
         const errorMessage = e?.message || "Transaction failed";
         setError(e);
-        notification.remove();
         notification.error(errorMessage);
 
         // Call error callback if provided
