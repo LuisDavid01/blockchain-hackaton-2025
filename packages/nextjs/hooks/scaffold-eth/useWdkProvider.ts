@@ -9,16 +9,19 @@ import { useWdk } from "~~/contexts/WdkContext";
 export function useWdkProvider(): ethers.JsonRpcProvider | null {
   const { currentNetwork, isInitialized } = useWdk();
 
+  // Extraer la URL de forma segura
+  const rpcUrl = currentNetwork?.rpcUrl;
+
   return useMemo(() => {
-    if (!isInitialized || !currentNetwork?.rpcUrl) {
+    if (!isInitialized || !rpcUrl) {
       return null;
     }
 
     try {
-      return new ethers.JsonRpcProvider(currentNetwork.rpcUrl);
+      return new ethers.JsonRpcProvider(rpcUrl);
     } catch (error) {
       console.error("Failed to create provider:", error);
       return null;
     }
-  }, [currentNetwork?.rpcUrl, isInitialized]);
+  }, [rpcUrl, isInitialized]);
 }
