@@ -65,8 +65,7 @@ export const EtherInput = ({
     if (transitoryDisplayValue && parseFloat(newDisplayValue) === parseFloat(transitoryDisplayValue)) {
       return transitoryDisplayValue;
     }
-    // Clear any transitory display values that might be set
-    setTransitoryDisplayValue(undefined);
+
     return newDisplayValue;
   }, [nativeCurrencyPrice, transitoryDisplayValue, displayUsdMode, value]);
 

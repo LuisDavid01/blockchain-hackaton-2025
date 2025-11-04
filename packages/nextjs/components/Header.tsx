@@ -4,6 +4,7 @@ import React, { useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { SignInButton, SignUpButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import { Bars3Icon, BugAntIcon } from "@heroicons/react/24/outline";
 import { WdkConnectButton } from "~~/components/scaffold-eth/WdkConnectButton";
 import { AVALANCHE_NETWORKS, NetworkId } from "~~/config/networks";
@@ -150,6 +151,17 @@ export const Header = () => {
               burgerMenuRef?.current?.removeAttribute("open");
             }}
           >
+            <li key={"signupButton"}>
+              <Link
+                href={"/signup"}
+                passHref
+                className={`
+											 hover:bg-secondary hover:shadow-md focus:!bg-secondary active:!text-neutral py-1.5 px-3 text-sm rounded-full gap-2 grid grid-flow-col`}
+              >
+                <span>Sign Up</span>
+              </Link>
+            </li>
+
             <HeaderMenuLinks />
           </ul>
         </details>
@@ -164,11 +176,17 @@ export const Header = () => {
         </Link>
         <ul className="hidden lg:flex lg:flex-nowrap menu menu-horizontal px-1 gap-2">
           <HeaderMenuLinks />
+          <li>
+            <SignUpButton>Sign Up</SignUpButton>
+          </li>
         </ul>
       </div>
       <div className="navbar-end grow mr-4 gap-2">
         <NetworkSelector />
         <WdkConnectButton />
+        <SignedIn>
+          <UserButton />
+        </SignedIn>
       </div>
     </div>
   );

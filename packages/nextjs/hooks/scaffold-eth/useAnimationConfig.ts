@@ -1,27 +1,48 @@
-import { useEffect, useRef, useState } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
 
 const ANIMATION_TIME = 2000;
 
-export function useAnimationConfig<T = any>(data: T) {
+export function useAnimationConfig<T>(data: T) {
   const [showAnimation, setShowAnimation] = useState(false);
-  const prevDataRef = useRef<T>(undefined as T);
-  useEffect(() => {
-    // Solo trigger la animación si hay un cambio real
-    if (prevDataRef.current !== undefined && prevDataRef.current !== data) {
-      setShowAnimation(true);
-      const timer = setTimeout(() => {
-        setShowAnimation(false);
-      }, ANIMATION_TIME);
+  const prevDataRef = useRef<T>(data);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-      // Cleanup del timeout si el componente se desmonta
-      return () => clearTimeout(timer);
+  const startAnimation = useCallback(() => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
     }
 
-    // Actualizar la referencia después de la verificación
+    setShowAnimation(true);
+
+    timeoutRef.current = setTimeout(() => {
+      setShowAnimation(false);
+      timeoutRef.current = null;
+    }, ANIMATION_TIME);
+  }, []);
+
+  // Deteción diferida del cambio en data
+  useEffect(() => {
+    if (prevDataRef.current !== data) {
+      // Deferring setState call to prevent synchronous update in effect
+      queueMicrotask(() => {
+        startAnimation();
+      });
+    }
+
     prevDataRef.current = data;
-  }, [data]);
+  }, [data, startAnimation]);
+
+  // Cleanup
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, []);
 
   return {
     showAnimation,
+    triggerAnimation: startAnimation,
   };
 }

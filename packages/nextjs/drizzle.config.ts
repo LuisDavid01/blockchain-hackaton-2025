@@ -1,6 +1,5 @@
 import { type Config } from "drizzle-kit";
 
-
 export default {
   schema: "./server/db/schema.ts",
   dialect: "singlestore",
@@ -13,4 +12,4 @@ export default {
     database: process.env.SINGLESTORE_DB_NAME ?? "",
     ssl: {},
   },
-} satisfies Config
+} satisfies Config;
