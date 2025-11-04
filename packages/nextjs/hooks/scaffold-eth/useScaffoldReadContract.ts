@@ -35,8 +35,13 @@ export const useScaffoldReadContract = <
   });
 
   const { query: queryOptions, watch, ...readContractConfig } = readConfig;
-  const defaultWatch = watch ?? true;
+  // Cast de tipos para evitar conflictos internos de React Query
+  const enabled =
+    isInitialized &&
+    !!deployedContract?.address &&
+    (!Array.isArray(args) || !args.some(arg => arg === undefined));
 
+  const refetchInterval = watch ?? true ? 10000 : false;
   const queryResult = useQuery({
     queryKey: ["scaffold-read-contract", contractName, functionName, args, currentNetwork.chainId],
     queryFn: async () => {
@@ -58,10 +63,9 @@ export const useScaffoldReadContract = <
         throw error;
       }
     },
-    enabled:
-      isInitialized && !!deployedContract?.address && (!Array.isArray(args) || !args.some(arg => arg === undefined)),
-    refetchInterval: defaultWatch ? 10000 : false, // Poll every 10 seconds if watching
-    ...queryOptions,
+    enabled: enabled as any, // Cast para evitar problemas de inferencia
+    refetchInterval: refetchInterval as any, // Otro cast necesario también
+    ...(queryOptions as any), // Evitamos errores innecesarios en props dinámicas
   });
 
   return queryResult as any;
