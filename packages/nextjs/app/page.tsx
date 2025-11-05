@@ -14,7 +14,7 @@ const Home: NextPage = () => {
       <div className="flex items-center flex-col grow pt-10">
         <div className="px-5 max-w-4xl mx-auto">
           <h1 className="text-center">
-            <span className="block text-2xl mb-2">Welcome to my incredible website!</span>
+            <span className="block text-2xl mb-2">Cambios Sebastian</span>
             <span className="block text-4xl font-bold">hola sebastian!</span>
             <span className="block text-lg mt-2 text-base-content/70">Powered by Scaffold-ETH 2</span>
           </h1>
