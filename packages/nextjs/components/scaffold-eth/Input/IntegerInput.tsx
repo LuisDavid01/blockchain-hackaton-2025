@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback } from "react";
 import { parseEther } from "viem";
 import { CommonInputProps, InputBase, IntegerVariant, isValidInteger } from "~~/components/scaffold-eth";
 
@@ -16,21 +16,19 @@ export const IntegerInput = ({
   variant = IntegerVariant.UINT256,
   disableMultiplyBy1e18 = false,
 }: IntegerInputProps) => {
-  const [inputError, setInputError] = useState(false);
+  // Calcular el error directamente en el render - NO usar useEffect
+  const inputError = !isValidInteger(variant, value);
+
   const multiplyBy1e18 = useCallback(() => {
-    if (!value) {
+    if (!value || inputError) {
       return;
     }
-    return onChange(parseEther(value).toString());
-  }, [onChange, value]);
-
-  useEffect(() => {
-    if (isValidInteger(variant, value)) {
-      setInputError(false);
-    } else {
-      setInputError(true);
+    try {
+      return onChange(parseEther(value as `${number}`).toString());
+    } catch (error) {
+      console.error("Error parsing ether:", error);
     }
-  }, [value, variant]);
+  }, [onChange, value, inputError]);
 
   return (
     <InputBase
@@ -50,7 +48,7 @@ export const IntegerInput = ({
             <button
               className={`${disabled ? "cursor-not-allowed" : "cursor-pointer"} font-semibold px-4 text-accent`}
               onClick={multiplyBy1e18}
-              disabled={disabled}
+              disabled={disabled || inputError}
               type="button"
             >
               ∗

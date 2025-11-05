@@ -36,12 +36,6 @@ export const queryClient = new QueryClient({
 export const ScaffoldEthAppWithProviders = ({ children }: { children: React.ReactNode }) => {
   const { resolvedTheme } = useTheme();
   const isDarkMode = resolvedTheme === "dark";
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
   return (
     <WdkProvider>
       <QueryClientProvider client={queryClient}>

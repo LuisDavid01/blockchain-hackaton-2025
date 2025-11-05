@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { PaginationButton, SearchBar, TransactionsTable } from "./_components";
 import type { NextPage } from "next";
 import { hardhat } from "viem/chains";
@@ -11,21 +11,12 @@ import { notification } from "~~/utils/scaffold-eth";
 const BlockExplorer: NextPage = () => {
   const { blocks, transactionReceipts, currentPage, totalBlocks, setCurrentPage, error } = useFetchBlocks();
   const { targetNetwork } = useTargetNetwork();
-  const [isLocalNetwork, setIsLocalNetwork] = useState(true);
-  const [hasError, setHasError] = useState(false);
 
-  useEffect(() => {
-    if (targetNetwork.id !== hardhat.id) {
-      setIsLocalNetwork(false);
-    }
-  }, [targetNetwork.id]);
+  // Calcular valores derivados directamente en el render
+  const isLocalNetwork = targetNetwork.id === hardhat.id;
+  const hasError = isLocalNetwork && !!error;
 
-  useEffect(() => {
-    if (targetNetwork.id === hardhat.id && error) {
-      setHasError(true);
-    }
-  }, [targetNetwork.id, error]);
-
+  // Solo los useEffect para efectos secundarios (notificaciones)
   useEffect(() => {
     if (!isLocalNetwork) {
       notification.error(
@@ -49,9 +40,9 @@ const BlockExplorer: NextPage = () => {
     }
   }, [
     isLocalNetwork,
-    targetNetwork.blockExplorers?.default.name,
-    targetNetwork.blockExplorers?.default.url,
     targetNetwork.name,
+    targetNetwork.blockExplorers?.default?.name,
+    targetNetwork.blockExplorers?.default?.url,
   ]);
 
   useEffect(() => {

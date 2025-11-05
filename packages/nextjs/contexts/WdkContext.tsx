@@ -12,7 +12,7 @@ export interface WdkAccount {
   getBalance(): Promise<bigint>;
   sendTransaction(params: { to: string; value: bigint; data?: string }): Promise<{ hash: string }>;
   quoteSendTransaction(params: { to: string; value: bigint; data?: string }): Promise<{ fee: bigint }>;
-  signMessage(message: string): Promise<string>;
+  signMessage?(message: string): Promise<string>;
 }
 
 // WDK Context State
