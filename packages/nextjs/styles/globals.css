@@ -8,10 +8,44 @@
   --animate-pulse-fast: pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
-@plugin "daisyui" {
-  themes:
-    light,
-    dark --prefersdark;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 255, 255, 255;
+  --background-start-rgb: 0, 0, 0;
+  --background-end-rgb: 0, 0, 0;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+}
+
+/* Custom styles for RainbowKit */
+[data-rk] .ju367v9c {
+  background-color: #dc2626;
+  color: white;
+}
+
+[data-rk] .ju367v9c:hover {
+  background-color: #b91c1c;
+}
+
+/* Custom styles for Clerk */
+.cl-card {
+  background-color: #171717;
+  border: 1px solid #404040;
+}
+
+.cl-headerTitle {
+  color: white;
 }
 
 @plugin "daisyui/theme" {
