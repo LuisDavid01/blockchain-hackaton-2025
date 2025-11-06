@@ -19,6 +19,7 @@ type HeaderMenuLink = {
 };
 
 export const menuLinks: HeaderMenuLink[] = [
+
 	{
 		label: "Home",
 		href: "/",
@@ -27,12 +28,18 @@ export const menuLinks: HeaderMenuLink[] = [
 		label: "Avalanche Wallet",
 		href: "/wallet",
 	},
+   {
+    label: "Market",
+    href: "/market",
+  },
 	{
 		label: "Debug Contracts",
 		href: "/debug",
 		icon: <BugAntIcon className="h-4 w-4" />,
 	},
+
 ];
+
 
 export const HeaderMenuLinks = () => {
 	const pathname = usePathname();
