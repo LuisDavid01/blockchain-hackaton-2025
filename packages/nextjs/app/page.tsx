@@ -2,11 +2,11 @@
 
 import Link from "next/link";
 import type { NextPage } from "next";
-import { 
-  CodeBracketIcon, 
-  ShieldCheckIcon, 
-  ChartBarIcon, 
-  EyeIcon, 
+import {
+  CodeBracketIcon,
+  ShieldCheckIcon,
+  ChartBarIcon,
+  EyeIcon,
   PlusCircleIcon,
   ServerIcon,
   CubeIcon,
@@ -74,22 +74,23 @@ const Home: NextPage = () => {
       <section className="relative py-20 px-5">
         <div className="max-w-6xl mx-auto text-center">
           <div className="flex justify-center mb-8">
-            <Image 
-              src="/nexoo.png" 
-              alt="Next Core" 
-              width={80} 
-              height={80}
+            <Image
+              src="/nexoo.png"
+              alt="Nexo Core"
+              width={250}
+              height={250}
               className="animate-pulse"
+              priority
             />
           </div>
           <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-fade-in">
-            <span className="text-white">Next</span>
+            <span className="text-white">Nexo</span>
             <span className="text-red-600">Core</span>
           </h1>
           <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto animate-slide-up">
             La plataforma líder para comprar y vender servicios profesionales con criptomonedas
           </p>
-          
+
           {/* Wallet Connection */}
           <div className="bg-gray-900 rounded-2xl p-6 max-w-md mx-auto mb-12 animate-fade-in">
             {isInitialized && address ? (
@@ -121,10 +122,20 @@ const Home: NextPage = () => {
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {services.map((service, index) => (
-              <div 
-                key={index} 
+              <div
+                key={index}
                 className="bg-gray-800 p-6 rounded-xl hover:bg-gray-700 transition-all duration-300 hover:transform hover:scale-105 group"
               >
+                <div className="flex justify-center mb-4">
+                  <Image
+                    src={`/${service.image}`}
+                    alt={service.title}
+                    width={150}
+                    height={150}
+                    className="rounded-lg"
+                  />
+                </div>
+
                 <div className="flex items-center mb-4">
                   <service.icon className="h-10 w-10 text-red-600 mr-4 group-hover:scale-110 transition-transform" />
                   <h3 className="text-xl font-semibold">{service.title}</h3>
@@ -155,16 +166,16 @@ const Home: NextPage = () => {
                   <GlobeAltIcon className="h-8 w-8 text-red-600 mb-3" />
                   <h3 className="text-xl font-semibold mb-2">Objetivo Principal</h3>
                   <p className="text-gray-300">
-                    Democratizar el acceso a servicios profesionales mediante criptomonedas, 
-                    eliminando barreras geográficas y financieras.
+                    Democratizar el acceso a servicios profesionales mediante criptomonedas,
+                    eliminando barreras geográficas y financieras, permitiento un servicio eficiente y seguro.
                   </p>
                 </div>
                 <div className="bg-gray-800 p-6 rounded-xl">
                   <BuildingStorefrontIcon className="h-8 w-8 text-red-600 mb-3" />
                   <h3 className="text-xl font-semibold mb-2">Misión</h3>
                   <p className="text-gray-300">
-                    Conectar talento global con oportunidades, facilitando transacciones seguras 
-                    y transparentes a través de blockchain.
+                    Conectar talento global con oportunidades, facilitando transacciones seguras
+                    y transparentes a través de blockchain, una plataforma de servicios eficiente.
                   </p>
                 </div>
               </div>
@@ -174,11 +185,11 @@ const Home: NextPage = () => {
             <div className="animate-fade-in-right">
               <div className="bg-gradient-to-br from-gray-800 to-gray-900 p-8 rounded-2xl border border-gray-700">
                 <div className="flex items-center mb-6">
-                  <Image 
-                    src="/cripto.png" 
-                    alt="Crypto" 
-                    width={60} 
-                    height={60}
+                  <Image
+                    src="/cripto.jpg"
+                    alt="Crypto"
+                    width={100}
+                    height={100}
                     className="mr-4"
                   />
                   <div>
@@ -186,7 +197,7 @@ const Home: NextPage = () => {
                     <p className="text-red-600 font-semibold">Pagos Seguros y Transparentes</p>
                   </div>
                 </div>
-                
+
                 <div className="space-y-4">
                   <div className="flex items-center">
                     <CurrencyDollarIcon className="h-6 w-6 text-green-500 mr-3" />
@@ -195,7 +206,7 @@ const Home: NextPage = () => {
                       <p className="text-gray-400 text-sm">Transacciones globales sin intermediarios</p>
                     </div>
                   </div>
-                  
+
                   <div className="flex items-center">
                     <ShieldCheckIcon className="h-6 w-6 text-blue-500 mr-3" />
                     <div>
@@ -203,7 +214,7 @@ const Home: NextPage = () => {
                       <p className="text-gray-400 text-sm">Smart contracts auditables y transparentes</p>
                     </div>
                   </div>
-                  
+
                   <div className="flex items-center">
                     <ChartBarIcon className="h-6 w-6 text-purple-500 mr-3" />
                     <div>
@@ -227,24 +238,14 @@ const Home: NextPage = () => {
       {/* Features Grid */}
       <section className="py-16 px-5 bg-gray-900">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">Explora NextCore</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">Explora NexoCore</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <Link href="/services" className="group">
               <div className="bg-gray-800 p-6 rounded-xl hover:bg-red-600 transition-all duration-300 h-full transform hover:scale-105">
                 <CodeBracketIcon className="h-8 w-8 mb-4 group-hover:scale-110 transition-transform" />
                 <h3 className="font-semibold mb-2">Explorar Servicios</h3>
                 <p className="text-gray-400 group-hover:text-gray-200 text-sm">
-                  Descubre servicios profesionales categorizados
-                </p>
-              </div>
-            </Link>
-
-            <Link href="/crypto" className="group">
-              <div className="bg-gray-800 p-6 rounded-xl hover:bg-red-600 transition-all duration-300 h-full transform hover:scale-105">
-                <ChartBarIcon className="h-8 w-8 mb-4 group-hover:scale-110 transition-transform" />
-                <h3 className="font-semibold mb-2">Mercado Crypto</h3>
-                <p className="text-gray-400 group-hover:text-gray-200 text-sm">
-                  Estadísticas en tiempo real
+                  Descubre servicios profesionales categorizados dentro NexoCore
                 </p>
               </div>
             </Link>
@@ -254,7 +255,7 @@ const Home: NextPage = () => {
                 <EyeIcon className="h-8 w-8 mb-4 group-hover:scale-110 transition-transform" />
                 <h3 className="font-semibold mb-2">Mis Compras</h3>
                 <p className="text-gray-400 group-hover:text-gray-200 text-sm">
-                  Seguimiento de proyectos en tiempo real
+                  Seguimiento de proyectos en tiempo real de tus compras y actualizaciones del mismo
                 </p>
               </div>
             </Link>
@@ -264,7 +265,7 @@ const Home: NextPage = () => {
                 <PlusCircleIcon className="h-8 w-8 mb-4 group-hover:scale-110 transition-transform" />
                 <h3 className="font-semibold mb-2">Publicar Servicio</h3>
                 <p className="text-gray-400 group-hover:text-gray-200 text-sm">
-                  Ofrece tus servicios y gana cripto
+                  Ofrece tus servicios, estadisticas en tiempo real y analizar el mercado
                 </p>
               </div>
             </Link>
@@ -276,7 +277,7 @@ const Home: NextPage = () => {
       <section className="py-16 px-5">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-6">
-            Únete a la Revolución Crypto
+            Únete a la Revolución Crypto con NexoCore
           </h2>
           <p className="text-xl text-gray-300 mb-8">
             Compra y vende servicios profesionales con la seguridad y transparencia de la blockchain
