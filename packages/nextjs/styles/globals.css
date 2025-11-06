@@ -110,12 +110,12 @@ body {
   --color-secondary-content: #341818;
   --color-accent: #e18484;
   --color-accent-content: #341818;
-  --color-neutral: #341818;
+  --color-neutral: var(--foreground);
   --color-neutral-content: #f9f2f2;
   --color-base-100: #f9f2f2;
   --color-base-200: #f0e8e8;
   --color-base-300: #e7dbdb;
-  --color-base-content: #341818;
+  --color-base-content: var(--foreground);
 
   --color-info: #3b82f6;
   --color-success: #10b981;
@@ -135,7 +135,7 @@ body {
   --color-secondary-content: #f9f2f2;
   --color-accent: #7b1e1e;
   --color-accent-content: #f9f2f2;
-  --color-neutral: #361717;
+  --color-neutral: var(--foreground);
   --color-neutral-content: #f9f2f2;
   --color-base-100: #0e0606;
   --color-base-200: #240f0f;
@@ -190,8 +190,7 @@ body {
 
 :root,
 [data-theme] {
-  background: var(--color-base-200);
-}
+  }
 
 .btn {
   @apply shadow-md;

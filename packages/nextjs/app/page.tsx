@@ -19,6 +19,7 @@ import { Address } from "~~/components/scaffold-eth";
 import { useWdk } from "~~/contexts/WdkContext";
 import { Button } from "~~/components/ui/button";
 import Image from "next/image";
+import DashboardCard from "~~/components/card";
 
 const Home: NextPage = () => {
   const { address, currentNetwork, isInitialized } = useWdk();
