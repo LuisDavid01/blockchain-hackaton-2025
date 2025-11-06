@@ -1,0 +1,80 @@
+"use client";
+
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { UserButton, useUser } from "@clerk/nextjs";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
+
+export const Navbar = () => {
+  const pathname = usePathname();
+  const { isSignedIn } = useUser();
+
+  const navItems = [
+    { href: "/", label: "Inicio" },
+    { href: "/services", label: "Servicios" },
+    { href: "/crypto", label: "Mercado Crypto" },
+    { href: "/purchases", label: "Mis Compras" },
+    { href: "/publish", label: "Publicar Servicio" },
+  ];
+
+  return (
+    <div className="bg-red-600 text-white shadow-lg">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16">
+          {/* Logo */}
+          <Link href="/" className="flex items-center space-x-2">
+            <span className="text-xl font-bold">NextCore</span>
+          </Link>
+
+          {/* Navigation Items */}
+          <nav className="hidden md:flex space-x-8">
+            {navItems.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                  pathname === item.href
+                    ? "bg-red-700 text-white"
+                    : "text-white hover:bg-red-700 hover:bg-opacity-50"
+                }`}
+              >
+                {item.label}
+              </Link>
+            ))}
+          </nav>
+
+          {/* Right Section */}
+          <div className="flex items-center space-x-4">
+            {/* Wallet Connection */}
+            <div className="hidden sm:block">
+              <ConnectButton 
+                chainStatus="none"
+                showBalance={false}
+                accountStatus="address"
+              />
+            </div>
+
+            {/* User Auth */}
+            {isSignedIn ? (
+              <UserButton 
+                appearance={{
+                  elements: {
+                    userButtonAvatarBox: "w-8 h-8",
+                    userButtonTrigger: "focus:shadow-none"
+                  }
+                }}
+              />
+            ) : (
+              <Link 
+                href="/sign-in" 
+                className="bg-white text-red-600 px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-100 transition-colors"
+              >
+                Iniciar Sesión
+              </Link>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
