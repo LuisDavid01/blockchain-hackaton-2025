@@ -19,7 +19,7 @@ export const value_table = createTable("value", {
   createdAt: timestamp("created_at").notNull().defaultNow(),
 });
 
-export type DB_FileType = typeof value_table.$inferSelect;
+export type DB_ValueType = typeof value_table.$inferSelect;
 
 export const services = createTable("services", {
   id: bigint("id", { mode: "number", unsigned: true }).primaryKey().autoincrement(),
