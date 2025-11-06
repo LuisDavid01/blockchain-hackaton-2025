@@ -16,55 +16,55 @@
 
 @plugin "daisyui/theme" {
   name: "light";
+  --color-primary: #ff1414;
+  --color-primary-content: #ffffff;
+  --color-secondary: #dea1a1;
+  --color-secondary-content: #341818;
+  --color-accent: #e18484;
+  --color-accent-content: #341818;
+  --color-neutral: #341818;
+  --color-neutral-content: #f9f2f2;
+  --color-base-100: #f9f2f2;
+  --color-base-200: #f0e8e8;
+  --color-base-300: #e7dbdb;
+  --color-base-content: #341818;
 
-  --color-primary: #93bbfb;
-  --color-primary-content: #212638;
-  --color-secondary: #dae8ff;
-  --color-secondary-content: #212638;
-  --color-accent: #93bbfb;
-  --color-accent-content: #212638;
-  --color-neutral: #212638;
-  --color-neutral-content: #ffffff;
-  --color-base-100: #ffffff;
-  --color-base-200: #f4f8ff;
-  --color-base-300: #dae8ff;
-  --color-base-content: #212638;
-  --color-info: #93bbfb;
-  --color-success: #34eeb6;
-  --color-warning: #ffcf72;
-  --color-error: #ff8863;
+  --color-info: #3b82f6;
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
 
   --radius-field: 9999rem;
   --radius-box: 1rem;
   --tt-tailw: 6px;
-}
+  }
 
 @plugin "daisyui/theme" {
   name: "dark";
+--color-primary: #eb0000;
+  --color-primary-content: #f9f2f2;
+  --color-secondary: #5e2121;
+  --color-secondary-content: #f9f2f2;
+  --color-accent: #7b1e1e;
+  --color-accent-content: #f9f2f2;
+  --color-neutral: #361717;
+  --color-neutral-content: #f9f2f2;
+  --color-base-100: #0e0606;
+  --color-base-200: #240f0f;
+  --color-base-300: #471f1f;
 
-  --color-primary: #212638;
-  --color-primary-content: #f9fbff;
-  --color-secondary: #323f61;
-  --color-secondary-content: #f9fbff;
-  --color-accent: #4969a6;
-  --color-accent-content: #f9fbff;
-  --color-neutral: #f9fbff;
-  --color-neutral-content: #385183;
-  --color-base-100: #385183;
-  --color-base-200: #2a3655;
-  --color-base-300: #212638;
-  --color-base-content: #f9fbff;
-  --color-info: #385183;
-  --color-success: #34eeb6;
-  --color-warning: #ffcf72;
-  --color-error: #ff8863;
+  --color-base-content: #f9f2f2;
+
+  --color-info: #3b82f6;
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
 
   --radius-field: 9999rem;
   --radius-box: 1rem;
-
   --tt-tailw: 6px;
   --tt-bg: var(--color-primary);
-}
+ }
 
 /*
   The default border color has changed to `currentColor` in Tailwind CSS v4,
@@ -168,49 +168,78 @@
 */
 
 :root {
-      --background: 0 71% 99%;
-      --foreground: 0 57% 3%;
-      --card: 0 71% 99%;
-      --card-foreground: 0 57% 3%;
-      --popover: 0 71% 99%;
-      --popover-foreground: 0 57% 3%;
-      --primary: 0 100% 54%;
-      --primary-foreground: 0 57% 3%;
-      --secondary: 0 48% 75%;
-      --secondary-foreground: 0 57% 3%;
-      --muted: 0 71% 20%;
-      --muted-foreground: 0 57% 70%;
-      --accent: 0 61% 70%;
-      --accent-foreground: 0 57% 3%;
-      --destructive: 0 85% 60%;
-      --destructive-foreground: 0 57% 3%;
-      --border: 0 71% 20%;
-      --input: 0 71% 20%;
-      --ring: 0 61% 40%;
-      --radius: 0.5rem;
-    }
-   
-    .dark {
-      --background: 0 60% 1%;
-      --foreground: 0 60% 97%;
-      --card: 0 60% 1%;
-      --card-foreground: 0 60% 97%;
-      --popover: 0 60% 1%;
-      --popover-foreground: 0 60% 97%;
-      --primary: 0 100% 46%;
-      --primary-foreground: 0 60% 1%;
-      --secondary: 0 48% 25%;
-      --secondary-foreground: 0 60% 97%;
-      --muted: 0 61% 80%;
-      --muted-foreground: 0 60% 97%;
-      --accent: 0 61% 30%;
-      --accent-foreground: 0 60% 97%;
-      --destructive: 0 62% 30%;
-      --destructive-foreground: 0 61% 10%;
-      --border: 0 60% 60%;
-      --input: 0 61% 80%;
-      --ring: 0 61% 60%;
-    }
+  --radius: 0.625rem;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+}
+
+/*
+  ---break---
+*/
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0 0);
+}
+
 /*
   ---break---
 */

@@ -12,7 +12,7 @@
     "compile": "hardhat compile",
     "deploy": "ts-node scripts/runHardhatDeployWithPK.ts",
     "deploy:local": "hardhat deploy --network avalancheLocal",
-	"deploy:fuji": "ts-node scripts/runHardhatDeployWithPK.ts --network avalancheFuji",
+    "deploy:fuji": "ts-node scripts/runHardhatDeployWithPK.ts --network avalancheFuji",
     "deploy:mainnet": "ts-node scripts/runHardhatDeployWithPK.ts --network avalanche",
     "flatten": "hardhat flatten",
     "fork": "MAINNET_FORKING_ENABLED=true hardhat node --network hardhat --no-deploy",
