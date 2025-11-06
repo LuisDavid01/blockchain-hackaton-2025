@@ -6,6 +6,7 @@ import { BugAntIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { Address } from "~~/components/scaffold-eth";
 import { useWdk } from "~~/contexts/WdkContext";
 import { Button } from "~~/components/ui/button";
+import DashboardCard from "~~/components/card";
 
 const Home: NextPage = () => {
   const { address, currentNetwork, isInitialized } = useWdk();
@@ -36,7 +37,9 @@ const Home: NextPage = () => {
               </div>
             )}
           </div>
-
+		  <DashboardCard title="hola">
+		  hola esto es un test
+		  </DashboardCard>
           <div className="mt-8 space-y-4">
             <div className="alert alert-info">
               <div>
