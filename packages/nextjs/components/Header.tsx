@@ -11,6 +11,7 @@ import { AVALANCHE_NETWORKS, NetworkId } from "~~/config/networks";
 import { useWdk } from "~~/contexts/WdkContext";
 import { useOutsideClick } from "~~/hooks/scaffold-eth";
 import { WalletIcon } from "@heroicons/react/20/solid";
+import { SwitchTheme } from "./SwitchTheme";
 
 type HeaderMenuLink = {
 	label: string;
@@ -28,10 +29,10 @@ export const menuLinks: HeaderMenuLink[] = [
 		label: "Avalanche Wallet",
 		href: "/wallet",
 	},
-   {
-    label: "Market",
-    href: "/market",
-  },
+	{
+		label: "Market",
+		href: "/market",
+	},
 	{
 		label: "Debug Contracts",
 		href: "/debug",
@@ -150,75 +151,103 @@ export const Header = () => {
 	useOutsideClick(burgerMenuRef, () => {
 		burgerMenuRef?.current?.removeAttribute("open");
 	});
-
 	return (
-		<div className="sticky lg:static top-0 navbar bg-base-100 min-h-0 shrink-0 justify-between z-20 shadow-md shadow-secondary px-0 sm:px-2">
-			<div className="navbar-start w-auto lg:w-1/2">
-				<details className="dropdown" ref={burgerMenuRef}>
-					<summary className="ml-1 btn btn-ghost lg:hidden hover:bg-transparent">
-						<Bars3Icon className="h-1/2" />
-					</summary>
-					<ul
-						className="menu menu-compact dropdown-content mt-3 p-2 shadow-sm bg-base-100 rounded-box w-52"
-						onClick={() => {
-							burgerMenuRef?.current?.removeAttribute("open");
-						}}
-					>
+		<div className="bg-background shadow-sm sticky z-60">
+			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+				{/* Desktop: Logo, menú y acciones */}
+				<div className="hidden lg:flex justify-between items-center py-4">
+					{/* Logo */}
+					<Link href="/" className="flex items-center gap-2 shrink-0">
+						<div className="relative w-10 h-10">
+							<Image alt="SE2 logo" className="cursor-pointer" fill src="/logo.svg" />
+						</div>
+						<div className="flex flex-col">
+							<span className="font-bold leading-tight">WDK Avalanche</span>
+							<span className="text-xs">Powered by Scaffold-ETH 2</span>
+						</div>
+					</Link>
+
+					{/* Menú desktop */}
+					<ul className="flex flex-nowrap gap-2">
+						<HeaderMenuLinks />
 						<SignedOut>
-							<li key={"signupButton"}>
+							<li key="signupButton-desktop">
 								<Link
-									href={"/signup"}
-									passHref
-									className={`
-											 hover:bg-secondary hover:shadow-md focus:!bg-secondary active:!text-neutral py-1.5 px-3 text-sm rounded-full gap-2 grid grid-flow-col`}
+									href="/signup"
+									className="hover:bg-secondary hover:shadow-md focus:bg-secondary active:text-neutral py-1.5 px-3 text-sm rounded-full inline-flex items-center gap-2"
 								>
 									<span>Sign Up</span>
 								</Link>
 							</li>
 						</SignedOut>
-						<HeaderMenuLinks />
-					</ul>
-				</details>
-				<Link href="/" passHref className="hidden lg:flex items-center gap-2 ml-4 mr-6 shrink-0">
-					<div className="flex relative w-10 h-10">
-						<Image alt="SE2 logo" className="cursor-pointer" fill src="/logo.svg" />
-					</div>
-					<div className="flex flex-col">
-						<span className="font-bold leading-tight">WDK Avalanche</span>
-						<span className="text-xs">Powered by Scaffold-ETH 2</span>
-					</div>
-				</Link>
-				<ul className="hidden lg:flex lg:flex-nowrap menu menu-horizontal px-1 gap-2">
-					<HeaderMenuLinks />
-					<SignedOut>
-						<li key={"signupButton-mobile"}>
-							<Link
-								href={"/signup"}
-								passHref
-								className={`
-											 hover:bg-secondary hover:shadow-md focus:!bg-secondary active:!text-neutral py-1.5 px-3 text-sm rounded-full gap-2 grid grid-flow-col`}
-							>
-								<span>Sign Up</span>
-							</Link>
-						</li>
-					</SignedOut>
-				</ul>
-			</div>
-			<div className="navbar-end grow mr-4 gap-2">
-				<NetworkSelector />
 
-				<SignedIn>
-					<UserButton >
-						<UserButton.MenuItems>
-							<UserButton.Link
-								label="Wallet"
-								labelIcon={<WalletIcon />}
-								href="/wallet"
-							/>
-						</UserButton.MenuItems>
-						<UserButton.UserProfileLink label="Wallet" url="/wallet" labelIcon={<DotIcon />} />
-					</UserButton>
-				</SignedIn>
+					</ul>
+
+					{/* Acciones desktop */}
+					<div className="flex items-center gap-2 shrink-0">
+						<NetworkSelector />
+						<SignedIn>
+							<UserButton>
+								<UserButton.MenuItems>
+									<UserButton.Link label="Wallet" labelIcon={<WalletIcon />} href="/wallet" />
+								</UserButton.MenuItems>
+								<UserButton.UserProfileLink label="Wallet" url="/wallet" labelIcon={<DotIcon />} />
+							</UserButton>
+						</SignedIn>
+						<SwitchTheme className="inline-flex items-center gap-2" />
+					</div>
+				</div>
+
+				{/* Mobile: Logo a la izquierda, menú hamburguesa a la derecha */}
+				<div className="lg:hidden flex justify-between items-center py-3">
+					{/* Logo mobile */}
+					<Link href="/" className="flex items-center gap-2">
+						<div className="relative w-8 h-8">
+							<Image alt="SE2 logo" className="cursor-pointer" fill src="/logo.svg" />
+						</div>
+						<div className="flex flex-col">
+							<span className="font-bold leading-tight text-sm">WDK Avalanche</span>
+							<span className="text-[10px] leading-tight">Powered by Scaffold-ETH 2</span>
+						</div>
+					</Link>
+
+					{/* Menú hamburguesa */}
+					<details className="relative" ref={burgerMenuRef}>
+						<summary className="p-2 cursor-pointer list-none hover:bg-secondary/10 rounded-md">
+							<Bars3Icon className="w-6 h-6" />
+						</summary>
+						<ul className="absolute right-0 mt-2 p-2 shadow-lg bg-background rounded-lg w-52 z-50 border">
+							<SignedOut>
+								<li key="signupButton">
+									<Link
+										href="/signup"
+										className="block hover:bg-secondary hover:shadow-md focus:bg-secondary active:text-neutral py-2 px-3 text-sm rounded-md"
+									>
+										<span>Sign Up</span>
+									</Link>
+								</li>
+							</SignedOut>
+							<HeaderMenuLinks />
+							<li className="pt-2 border-t mt-2">
+								<div className="flex items-center gap-2 px-3 py-2">
+									<NetworkSelector />
+									<SignedIn>
+										<UserButton>
+											<UserButton.MenuItems>
+												<UserButton.Link label="Wallet" labelIcon={<WalletIcon />} href="/wallet" />
+											</UserButton.MenuItems>
+											<UserButton.UserProfileLink
+												label="Wallet"
+												url="/wallet"
+												labelIcon={<DotIcon />}
+											/>
+										</UserButton>
+									</SignedIn>
+								</div>
+							</li>
+						</ul>
+					</details>
+				</div>
 			</div>
 		</div>
 	);
