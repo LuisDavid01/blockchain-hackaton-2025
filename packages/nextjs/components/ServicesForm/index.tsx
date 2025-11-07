@@ -6,6 +6,7 @@ import { Button } from '../ui/button'
 import { Form, FormError, FormGroup, FormInput, FormLabel, FormSelect, FormTextarea } from '../FormWithActios'
 import { DB_ServiceType } from '~~/server/db/schema'
 import { createService, updateService } from '~~/actions/services'
+import { useQueryClient } from '@tanstack/react-query'
 interface ExpedienteFormProps {
   service ?: DB_ServiceType,
   isEditing?: boolean
@@ -22,7 +23,7 @@ const initialState: ActionResponse = {
 export default function ServicesForm ({service,
   isEditing = false,
 }: ExpedienteFormProps) {
-
+	const queryClient = useQueryClient();
     const router = useRouter()
 
   const [state, formAction, isPending] = useActionState<
@@ -45,6 +46,7 @@ export default function ServicesForm ({service,
 
       // Handle successful submission
       if (result.success) {
+		await queryClient.invalidateQueries({ queryKey: ['services'] });
         router.refresh()
 
       }
