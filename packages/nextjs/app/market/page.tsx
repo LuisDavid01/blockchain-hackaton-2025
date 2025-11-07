@@ -31,6 +31,8 @@ export default function MarketPage() {
 				</p>
 
 				<ServicesForm />
+
+				
 				{/* Listings Grid */}
 				<div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
 					{listings.length === 0 || isLoading && (
@@ -55,6 +57,8 @@ export default function MarketPage() {
 								</div>
 							</div>
 						</div>
+
+						 
 					))}
 				</div>
 			</div>

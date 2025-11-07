@@ -56,7 +56,7 @@ export async function createService(data: ServiceData) {
 			return {
 				success: false,
 				message: 'Error de validacion',
-				error: validationResult.error.flatten().formErrors,
+				errors: validationResult.error.flatten().formErrors,
 			}
 		}
 
