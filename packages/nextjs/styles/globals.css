@@ -1,7 +1,8 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+@custom-variant dark (&:is(.dark *));
+
 
 @theme {
   --shadow-center: 0 0 12px -2px rgb(0 0 0 / 0.05);
@@ -12,21 +13,9 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 255, 255, 255;
-  --background-start-rgb: 0, 0, 0;
-  --background-end-rgb: 0, 0, 0;
-}
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-}
+
+
 
 @keyframes fade-in {
   from { opacity: 0; }
@@ -83,14 +72,7 @@ body {
 }
 
 /* Custom styles for RainbowKit */
-[data-rk] .ju367v9c {
-  background-color: #dc2626;
-  color: white;
-}
 
-[data-rk] .ju367v9c:hover {
-  background-color: #b91c1c;
-}
 
 /* Custom styles for Clerk */
 .cl-card {
@@ -102,57 +84,6 @@ body {
   color: white;
 }
 
-@plugin "daisyui/theme" {
-  name: "light";
-  --color-primary: #ff1414;
-  --color-primary-content: #ffffff;
-  --color-secondary: #dea1a1;
-  --color-secondary-content: #341818;
-  --color-accent: #e18484;
-  --color-accent-content: #341818;
-  --color-neutral: var(--foreground);
-  --color-neutral-content: #f9f2f2;
-  --color-base-100: #f9f2f2;
-  --color-base-200: #f0e8e8;
-  --color-base-300: #e7dbdb;
-  --color-base-content: var(--foreground);
-
-  --color-info: #3b82f6;
-  --color-success: #10b981;
-  --color-warning: #f59e0b;
-  --color-error: #ef4444;
-
-  --radius-field: 9999rem;
-  --radius-box: 1rem;
-  --tt-tailw: 6px;
-  }
-
-@plugin "daisyui/theme" {
-  name: "dark";
---color-primary: #eb0000;
-  --color-primary-content: #f9f2f2;
-  --color-secondary: #5e2121;
-  --color-secondary-content: #f9f2f2;
-  --color-accent: #7b1e1e;
-  --color-accent-content: #f9f2f2;
-  --color-neutral: var(--foreground);
-  --color-neutral-content: #f9f2f2;
-  --color-base-100: #0e0606;
-  --color-base-200: #240f0f;
-  --color-base-300: #471f1f;
-
-  --color-base-content: #f9f2f2;
-
-  --color-info: #3b82f6;
-  --color-success: #10b981;
-  --color-warning: #f59e0b;
-  --color-error: #ef4444;
-
-  --radius-field: 9999rem;
-  --radius-box: 1rem;
-  --tt-tailw: 6px;
-  --tt-bg: var(--color-primary);
- }
 
 /*
   The default border color has changed to `currentColor` in Tailwind CSS v4,
@@ -163,13 +94,7 @@ body {
   color utility to any element that depends on these defaults.
 */
 @layer base {
-  *,
-  ::after,
-  ::before,
-  ::backdrop,
-  ::file-selector-button {
-    border-color: var(--color-gray-200, currentColor);
-  }
+
 
   p {
     margin: 1rem 0;
@@ -188,17 +113,9 @@ body {
   }
 }
 
-:root,
-[data-theme] {
-  }
 
-.btn {
-  @apply shadow-md;
-}
 
-.btn.btn-ghost {
-  @apply shadow-none;
-}
+
 
 .link {
   text-underline-offset: 2px;
@@ -213,6 +130,15 @@ body {
 */
 
 @theme inline {
+
+		--animate-scroll: scroll var(--animation-duration, 40s) var(--animation-direction, forwards) linear infinite;
+
+	@keyframes scroll {
+		to {
+			transform: translate(calc(-50% - 0.5rem));
+		}
+	}
+
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -255,78 +181,49 @@ body {
 */
 
 :root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --background: oklch(0.96 0.01 29);
+  --foreground: oklch(0.26 0.05 29);
+  --card: oklch(0.96 0.01 29);
+  --card-foreground: oklch(0.26 0.05 29);
+  --popover: oklch(0.96 0.01 29);
+  --popover-foreground: oklch(0.26 0.05 29);
+  --primary: oklch(0.60 0.19 29);
+  --primary-foreground: oklch(0.26 0.05 29);
+  --secondary: oklch(0.78 0.07 29);
+  --secondary-foreground: oklch(0.26 0.05 29);
+  --muted: oklch(0.20 0.02 29);
+  --muted-foreground: oklch(0.70 0.04 29);
+  --accent: oklch(0.70 0.09 29);
+  --accent-foreground: oklch(0.26 0.05 29);
+  --destructive: oklch(0.58 0.15 29);
+  --destructive-foreground: oklch(0.26 0.05 29);
+  --border: oklch(0.20 0.02 29);
+  --input: oklch(0.20 0.02 29);
+  --ring: oklch(0.40 0.09 29);
+  --radius: 0.5rem;
 }
-
-/*
-  ---break---
-*/
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  --background: oklch(0.1112 0.0268 22.44);
+  --foreground: oklch(0.93 0.05 29);
+  --card: oklch(0.06 0.01 29);
+  --card-foreground: oklch(0.93 0.05 29);
+  --popover: oklch(0.06 0.01 29);
+  --popover-foreground: oklch(0.93 0.05 29);
+  --primary: oklch(0.46 0.17 29);
+  --primary-foreground: oklch(0.06 0.01 29);
+  --secondary: oklch(0.25 0.05 29);
+  --secondary-foreground: oklch(0.93 0.05 29);
+  --muted: oklch(0.80 0.06 29);
+  --muted-foreground: oklch(0.93 0.05 29);
+  --accent: oklch(0.30 0.07 29);
+  --accent-foreground: oklch(0.93 0.05 29);
+  --destructive: oklch(0.30 0.06 29);
+  --destructive-foreground: oklch(0.10 0.03 29);
+  --border: oklch(0.60 0.04 29);
+  --input: oklch(0.80 0.06 29);
+  --ring: oklch(0.60 0.07 29);
 }
-
 /*
   ---break---
 */
@@ -338,4 +235,16 @@ body {
   body {
     @apply bg-background text-foreground;
   }
+}
+
+.hide-scroll {
+	-ms-overflow-style: none;
+	/* Internet Explorer 10+ */
+	scrollbar-width: none;
+	/* Firefox, Safari 18.2+, Chromium 121+ */
+}
+
+.hide-scroll::-webkit-scrollbar {
+	display: none;
+	/* Older Safari and Chromium */
 }
