@@ -1,10 +1,10 @@
 "use server";
-
+/*
 import { auth } from "@clerk/nextjs/server";
 import { eq } from "drizzle-orm";
 import { z } from "zod";
 import { db } from "~~/server/db";
-import { value_table } from "~~/server/db/schema";
+//import { value_table } from "~~/server/db/schema";
 // Schema de validación de los datos enviados
 // Debe seguir lo  que se define en la tabla de base de datos
 const ValueSchema = z.object({
@@ -165,3 +165,5 @@ export async function deleteValue(idValue: number) {
 		message: 'Exito al eliminar el valor de criptomoneda',
 	}
 }
+*/
+
