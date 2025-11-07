@@ -175,7 +175,7 @@
 */
 
 :root {
-  /* Modo Claro - Esquema Negro y Naranja */
+  /* Modo Claro - Esquema Negro y Rojo */
   --background: oklch(1 0 0);
   /* Blanco puro */
   --foreground: oklch(0.15 0.02 29);
@@ -188,8 +188,8 @@
   /* Blanco casi puro */
   --popover-foreground: oklch(0.15 0.02 29);
   /* Negro suave */
-  --primary: oklch(0.55 0.22 47.6);
-  /* Naranja vibrante */
+  --primary: oklch(0.55 0.25 25);
+  /* Rojo vibrante */
   --primary-foreground: oklch(1 0 0);
   /* Blanco */
   --secondary: oklch(0.85 0.05 29);
@@ -200,8 +200,8 @@
   /* Gris muy claro */
   --muted-foreground: oklch(0.45 0.04 29);
   /* Gris medio */
-  --accent: oklch(0.55 0.22 47.6);
-  /* Naranja vibrante */
+  --accent: oklch(0.55 0.25 25);
+  /* Rojo vibrante */
   --accent-foreground: oklch(1 0 0);
   /* Blanco */
   --destructive: oklch(0.58 0.15 29);
@@ -211,13 +211,13 @@
   /* Gris claro para bordes */
   --input: oklch(0.92 0.02 29);
   /* Gris muy claro */
-  --ring: oklch(0.55 0.22 47.6);
-  /* Naranja para focus */
+  --ring: oklch(0.55 0.25 25);
+  /* Rojo para focus */
   --radius: 0.5rem;
 }
 
 .dark {
-  /* Modo Oscuro - Esquema Negro y Naranja */
+  /* Modo Oscuro - Esquema Negro y Rojo */
   --background: oklch(0.12 0.02 29);
   /* Negro profundo */
   --foreground: oklch(0.95 0.01 29);
@@ -230,8 +230,8 @@
   /* Negro más claro */
   --popover-foreground: oklch(0.95 0.01 29);
   /* Blanco casi puro */
-  --primary: oklch(0.65 0.20 47.6);
-  /* Naranja brillante */
+  --primary: oklch(0.65 0.22 25);
+  /* Rojo brillante */
   --primary-foreground: oklch(0.12 0.02 29);
   /* Negro profundo */
   --secondary: oklch(0.25 0.03 29);
@@ -242,8 +242,8 @@
   /* Gris muy oscuro */
   --muted-foreground: oklch(0.65 0.04 29);
   /* Gris medio */
-  --accent: oklch(0.65 0.20 47.6);
-  /* Naranja brillante */
+  --accent: oklch(0.65 0.22 25);
+  /* Rojo brillante */
   --accent-foreground: oklch(0.12 0.02 29);
   /* Negro profundo */
   --destructive: oklch(0.55 0.15 29);
@@ -253,8 +253,8 @@
   /* Gris oscuro para bordes */
   --input: oklch(0.20 0.03 29);
   /* Gris muy oscuro */
-  --ring: oklch(0.65 0.20 47.6);
-  /* Naranja brillante para focus */
+  --ring: oklch(0.65 0.22 25);
+  /* Rojo brillante para focus */
 }
 
 /*
