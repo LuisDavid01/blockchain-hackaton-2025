@@ -70,9 +70,9 @@ const Home: NextPage = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-black text-gray-100">
+    <div className="min-h-screen bg-background text-foreground">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-black via-gray-900 to-black py-20 px-5">
+      <section className="relative bg-gradient-to-br from-background via-muted to-background py-20 px-5">
         <div className="max-w-6xl mx-auto text-center">
           <div className="flex justify-center mb-8">
             <Image
@@ -86,31 +86,31 @@ const Home: NextPage = () => {
           </div>
 
           <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-fade-in">
-            <span className="text-white">Nexo</span>
-            <span className="text-orange-500">Core</span>
+            <span className="text-foreground">Nexo</span>
+            <span className="text-primary">Core</span>
           </h1>
 
-          <p className="text-xl md:text-2xl text-gray-400 mb-8 max-w-3xl mx-auto animate-slide-up">
+          <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-3xl mx-auto animate-slide-up">
             La plataforma líder para comprar y vender servicios profesionales con criptomonedas
           </p>
 
           {/* Wallet Connection */}
-          <div className="bg-gray-900 rounded-2xl p-6 max-w-md mx-auto mb-12 animate-fade-in border border-gray-800">
+          <div className="bg-card rounded-2xl p-6 max-w-md mx-auto mb-12 animate-fade-in border border-border">
             {isInitialized && address ? (
               <div className="text-center">
-                <p className="text-orange-500 mb-2">✓ Conectado</p>
+                <p className="text-primary mb-2">✓ Conectado</p>
                 <Address address={address as `0x${string}`} />
-                <p className="text-gray-400 text-sm mt-2">
+                <p className="text-muted-foreground text-sm mt-2">
                   Red: {currentNetwork.displayName}
                 </p>
               </div>
             ) : (
               <div className="text-center">
-                <p className="text-gray-400 mb-4">
+                <p className="text-muted-foreground mb-4">
                   Conecta tu wallet para comenzar:
                 </p>
                 <Link href="/wallet">
-                  <Button className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-lg transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-orange-500/25">
+                  <Button className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-3 rounded-lg transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-primary/25">
                     Conectar Wallet
                   </Button>
                 </Link>
@@ -121,12 +121,12 @@ const Home: NextPage = () => {
       </section>
 
       {/* Services Section */}
-      <section className="py-16 px-5 bg-gradient-to-br from-gray-900/50 to-black">
+      <section className="py-16 px-5 bg-gradient-to-br from-card/50 to-background">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 text-white">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 text-foreground">
             Nuestros Servicios
           </h2>
-          <p className="text-gray-400 text-center mb-12 max-w-2xl mx-auto">
+          <p className="text-muted-foreground text-center mb-12 max-w-2xl mx-auto">
             Soluciones tecnológicas completas para impulsar tu negocio en la era digital
           </p>
 
@@ -134,7 +134,7 @@ const Home: NextPage = () => {
             {services.map((service, index) => (
               <div
                 key={index}
-                className="bg-gray-900 p-6 rounded-xl hover:bg-gray-800 transition-all duration-300 hover:transform hover:scale-105 group border border-gray-800 hover:border-orange-500/50"
+                className="bg-card p-6 rounded-xl hover:bg-accent transition-all duration-300 hover:transform hover:scale-105 group border border-border hover:border-primary/50"
               >
                 <div className="flex justify-center mb-4">
                   <Image
@@ -147,15 +147,15 @@ const Home: NextPage = () => {
                 </div>
 
                 <div className="flex items-center mb-4">
-                  <service.icon className="h-10 w-10 text-orange-500 mr-4 group-hover:scale-110 transition-transform duration-300" />
-                  <h3 className="text-xl font-semibold text-white">{service.title}</h3>
+                  <service.icon className="h-10 w-10 text-primary mr-4 group-hover:scale-110 transition-transform duration-300" />
+                  <h3 className="text-xl font-semibold text-foreground">{service.title}</h3>
                 </div>
-                <p className="text-gray-300 mb-4">{service.description}</p>
+                <p className="text-muted-foreground mb-4">{service.description}</p>
                 <div className="flex flex-wrap gap-2">
                   {service.features.map((feature, idx) => (
                     <span
                       key={idx}
-                      className="bg-gray-800 px-3 py-1 rounded-full text-sm text-gray-300 group-hover:bg-orange-500/20 group-hover:text-orange-300 transition-colors duration-300"
+                      className="bg-muted px-3 py-1 rounded-full text-sm text-muted-foreground group-hover:bg-primary/20 group-hover:text-primary transition-colors duration-300"
                     >
                       {feature}
                     </span>
@@ -168,26 +168,26 @@ const Home: NextPage = () => {
       </section>
 
       {/* Vision Section */}
-      <section className="py-16 px-5 bg-black">
+      <section className="py-16 px-5 bg-background">
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Vision de la Empresa */}
             <div className="animate-fade-in-left">
-              <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">Nuestra Visión</h2>
+              <h2 className="text-3xl md:text-4xl font-bold mb-6 text-foreground">Nuestra Visión</h2>
               <div className="space-y-4">
-                <div className="bg-gray-900 p-6 rounded-xl border border-gray-800 hover:border-orange-500/50 transition-colors duration-300">
-                  <GlobeAltIcon className="h-8 w-8 text-orange-500 mb-3" />
-                  <h3 className="text-xl font-semibold mb-2 text-white">Objetivo Principal</h3>
-                  <p className="text-gray-300">
+                <div className="bg-card p-6 rounded-xl border border-border hover:border-primary/50 transition-colors duration-300">
+                  <GlobeAltIcon className="h-8 w-8 text-primary mb-3" />
+                  <h3 className="text-xl font-semibold mb-2 text-foreground">Objetivo Principal</h3>
+                  <p className="text-muted-foreground">
                     Democratizar el acceso a servicios profesionales mediante criptomonedas,
                     eliminando barreras geográficas y financieras, permitiendo un servicio eficiente y seguro.
                   </p>
                 </div>
 
-                <div className="bg-gray-900 p-6 rounded-xl border border-gray-800 hover:border-orange-500/50 transition-colors duration-300">
-                  <BuildingStorefrontIcon className="h-8 w-8 text-orange-500 mb-3" />
-                  <h3 className="text-xl font-semibold mb-2 text-white">Misión</h3>
-                  <p className="text-gray-300">
+                <div className="bg-card p-6 rounded-xl border border-border hover:border-primary/50 transition-colors duration-300">
+                  <BuildingStorefrontIcon className="h-8 w-8 text-primary mb-3" />
+                  <h3 className="text-xl font-semibold mb-2 text-foreground">Misión</h3>
+                  <p className="text-muted-foreground">
                     Conectar talento global con oportunidades, facilitando transacciones seguras
                     y transparentes a través de blockchain, una plataforma de servicios eficiente.
                   </p>
@@ -197,7 +197,7 @@ const Home: NextPage = () => {
 
             {/* Crypto Section */}
             <div className="animate-fade-in-right">
-              <div className="bg-gradient-to-br from-gray-900 to-black p-8 rounded-2xl border border-gray-800 hover:border-orange-500/50 transition-colors duration-300">
+              <div className="bg-gradient-to-br from-card to-background p-8 rounded-2xl border border-border hover:border-primary/50 transition-colors duration-300">
                 <div className="flex items-center mb-6">
                   <Image
                     src="/cripto.jpg"
@@ -207,8 +207,8 @@ const Home: NextPage = () => {
                     className="mr-4 rounded-lg grayscale hover:grayscale-0 transition-all duration-300"
                   />
                   <div>
-                    <h2 className="text-3xl font-bold text-white">Tecnología Blockchain</h2>
-                    <p className="text-orange-500 font-semibold">
+                    <h2 className="text-3xl font-bold text-foreground">Tecnología Blockchain</h2>
+                    <p className="text-primary font-semibold">
                       Pagos Seguros y Transparentes
                     </p>
                   </div>
@@ -216,37 +216,37 @@ const Home: NextPage = () => {
 
                 <div className="space-y-4">
                   <div className="flex items-center">
-                    <CurrencyDollarIcon className="h-6 w-6 text-orange-400 mr-3" />
+                    <CurrencyDollarIcon className="h-6 w-6 text-primary mr-3" />
                     <div>
-                      <h4 className="font-semibold text-white">Pagos Instantáneos</h4>
-                      <p className="text-gray-400 text-sm">
+                      <h4 className="font-semibold text-foreground">Pagos Instantáneos</h4>
+                      <p className="text-muted-foreground text-sm">
                         Transacciones globales sin intermediarios
                       </p>
                     </div>
                   </div>
                   <div className="flex items-center">
-                    <ShieldCheckIcon className="h-6 w-6 text-orange-400 mr-3" />
+                    <ShieldCheckIcon className="h-6 w-6 text-primary mr-3" />
                     <div>
-                      <h4 className="font-semibold text-white">Seguridad Garantizada</h4>
-                      <p className="text-gray-400 text-sm">
+                      <h4 className="font-semibold text-foreground">Seguridad Garantizada</h4>
+                      <p className="text-muted-foreground text-sm">
                         Smart contracts auditables y transparentes
                       </p>
                     </div>
                   </div>
                   <div className="flex items-center">
-                    <ChartBarIcon className="h-6 w-6 text-orange-400 mr-3" />
+                    <ChartBarIcon className="h-6 w-6 text-primary mr-3" />
                     <div>
-                      <h4 className="font-semibold text-white">Tarifas Reducidas</h4>
-                      <p className="text-gray-400 text-sm">
+                      <h4 className="font-semibold text-foreground">Tarifas Reducidas</h4>
+                      <p className="text-muted-foreground text-sm">
                         Menores costos que métodos tradicionales
                       </p>
                     </div>
                   </div>
                 </div>
 
-                <div className="mt-6 p-4 bg-gray-800 rounded-lg border border-gray-700">
-                  <p className="text-sm text-gray-300">
-                    <strong className="text-orange-400">Aceptamos:</strong> Bitcoin, Ethereum, USDT, USDC y otras criptomonedas principales
+                <div className="mt-6 p-4 bg-muted rounded-lg border border-border">
+                  <p className="text-sm text-muted-foreground">
+                    <strong className="text-primary">Aceptamos:</strong> Bitcoin, Ethereum, USDT, USDC y otras criptomonedas principales
                   </p>
                 </div>
               </div>
@@ -256,24 +256,24 @@ const Home: NextPage = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 px-5 bg-gradient-to-br from-black via-gray-900 to-black">
+      <section className="py-16 px-5 bg-gradient-to-br from-background via-card/50 to-background">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">
+          <h2 className="text-3xl md:text-4xl font-bold mb-6 text-foreground">
             Únete a la Revolución Crypto con NexoCore
           </h2>
-          <p className="text-xl text-gray-400 mb-8">
+          <p className="text-xl text-muted-foreground mb-8">
             Compra y vende servicios profesionales con la seguridad y transparencia de la blockchain
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/services">
-              <Button className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-lg transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-orange-500/25">
+              <Button className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-3 rounded-lg transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-primary/25">
                 Explorar Servicios
               </Button>
             </Link>
             <Link href="/publish">
               <Button
                 variant="outline"
-                className="border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white px-8 py-3 rounded-lg transform hover:scale-105 transition-all duration-300"
+                className="border-primary text-primary hover:bg-primary hover:text-primary-foreground px-8 py-3 rounded-lg transform hover:scale-105 transition-all duration-300"
               >
                 Publicar Servicio
               </Button>
