@@ -265,7 +265,7 @@ const Home: NextPage = () => {
             Compra y vende servicios profesionales con la seguridad y transparencia de la blockchain
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/services">
+            <Link href="/PlataformaServicios">
               <Button className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-3 rounded-lg transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-primary/25">
                 Explorar Servicios
               </Button>
